@@ -1,0 +1,15 @@
+@url = http://localhost:3000/transaction
+
+###
+POST {{url}}
+Content-Type: application/json
+
+{
+  "description": "Picpay",
+  "value": 1000,
+  "date": "2022-07-14T23:33:00.000Z",
+  "account": "MAIN",
+  "type": "DEBIT",
+  "categoryId": "teste",
+  "subcategoryId": "teste"
+}
