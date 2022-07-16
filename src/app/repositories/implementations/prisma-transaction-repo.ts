@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Transaction } from "../../entities/transaction";
+import { ApiError } from "../../utils/api-error";
 import { ITransactionRepo } from "../i-transaction-repo";
 
 const prisma = new PrismaClient;
@@ -9,7 +10,7 @@ export class PrismaTransactionRepo implements ITransactionRepo {
     try {
       console.log(transaction);
     } catch(err: any) {
-      throw new Error("Erro de acesso ao Banco de Dados.");
+      throw ApiError.DBAccessError;
     }
   }
 }
