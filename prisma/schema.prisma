@@ -16,3 +16,9 @@ model Subcategory {
   id          String @id
   description String @unique
 }
+
+model Account {
+  id          String @id
+  description String @unique
+  total       Float  @db.Real
+}
