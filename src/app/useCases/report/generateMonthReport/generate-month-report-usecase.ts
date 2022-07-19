@@ -8,7 +8,7 @@ export class GenerateMonthReportUseCase {
   ) {}
 
   async execute(month: string, account: string) {
-    let fileName = './src/app/useCases/report/pdf/' + account.toLowerCase() + month + '.pdf';
+    let fileName = './pdf/' + account.toLowerCase() + month + '.pdf';
     const categories = await this.findAllTransactionCategoryUseCase.execute();
     this.pdf.monthReport(fileName);
   }
