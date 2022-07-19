@@ -4,10 +4,58 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Relatório</title>
+  <style type="text/css">
+    body {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    table {
+      width: 100%;
+    }
+    th {
+      text-align: left;
+    }
+    .in {
+      color: green
+    }
+    .out {
+      color: red
+    }
+  </style>
 </head>
 <body>
-  <h1>Relatório do mês</h1>
+  <h1>Relatório de 06/2022</h1>
+  <p>
+    Conta: ITAU <br>
+    Início do mês: R$1000.00 <br>
+  </p>
   <hr>
+  <table>
+    <tr>
+      <th>Data</th>
+      <th>Descrição</th>
+      <th>Categoria</th>
+      <th>Valor</th>
+      <th>Saldo</th>
+    </tr>
+    <tr class="in">
+      <td>01/06/2022</td>
+      <td>Salário</td>
+      <td>TRABALHO/SALÁRIO</td>
+      <td>R$2000.00</td>
+      <td>R$3000.00</td>
+    </tr>
+    <tr class="out">
+      <td>15/06/2022</td>
+      <td>Gasto absurdo</td>
+      <td>LAZER</td>
+      <td>R$2500.00</td>
+      <td>R$500.00</td>
+    </tr>
+  </table>
+  <hr>
+  <p>
+    Final do mês: R$500.00
+  </p>
 </body>
 </html>
