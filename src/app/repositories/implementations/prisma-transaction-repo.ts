@@ -8,7 +8,17 @@ const prisma = new PrismaClient;
 export class PrismaTransactionRepo implements ITransactionRepo {
   async create(transaction: Transaction): Promise<void> {
     try {
-      console.log(transaction);
+      await prisma.transaction.create({
+        data: {
+          id: transaction.id,
+          value: transaction.value,
+          date: transaction.date,
+          type: transaction.type,
+          accountId: transaction.accountId,
+          categoryId: transaction.categoryId,
+          subcategoryId: transaction.subcategoryId
+        }
+      });
     } catch(err: any) {
       throw ApiError.DBAccessError;
     }

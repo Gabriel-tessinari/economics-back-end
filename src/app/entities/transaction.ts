@@ -11,7 +11,7 @@ type Props = {
   type: TransactionType;
   accountId: string;
   categoryId: string;
-  subcategoryId: string;
+  subcategoryId?: string;
   account?: Account;
   category?: TransactionCategory;
   subcategory?: TransactionSubcategory;
@@ -25,7 +25,7 @@ export class Transaction {
   public type: TransactionType;
   public accountId: string;
   public categoryId: string;
-  public subcategoryId: string;
+  public subcategoryId?: string;
   public account?: Account;
   public category?: TransactionCategory;
   public subcategory?: TransactionSubcategory;

@@ -6,10 +6,9 @@ Content-Type: application/json
 
 {
   "description": "Picpay",
-  "value": 1000,
-  "date": "2022-07-14T23:33:00.000Z",
-  "account": "MAIN",
-  "type": "DEBIT",
-  "categoryId": "teste",
-  "subcategoryId": "teste"
+  "value": 1802.93,
+  "date": "18/07/2022",
+  "type": "CREDIT",
+  "accountId": "30d39f31-56d2-4427-a550-1445bd6b282e",
+  "categoryId": "38956369-05c7-4a55-8198-59276ff56f87"
 }

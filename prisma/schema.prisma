@@ -8,17 +8,33 @@ datasource db {
 }
 
 model Category {
-  id          String @id
-  description String @unique
+  id           String        @id
+  description  String        @unique
+  transactions Transaction[]
 }
 
 model Subcategory {
-  id          String @id
-  description String @unique
+  id           String        @id
+  description  String        @unique
+  transactions Transaction[]
 }
 
 model Account {
-  id          String @id
-  description String @unique
-  total       Float  @db.Real
+  id           String        @id
+  description  String        @unique
+  total        Float         @db.Real
+  transactions Transaction[]
+}
+
+model Transaction {
+  id            String       @id
+  value         Float        @db.Real
+  date          String
+  type          String
+  accountId     String
+  categoryId    String
+  subcategoryId String?
+  account       Account      @relation(fields: [accountId], references: [id])
+  category      Category     @relation(fields: [categoryId], references: [id])
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
 }
