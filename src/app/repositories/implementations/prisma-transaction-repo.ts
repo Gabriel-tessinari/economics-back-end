@@ -35,6 +35,11 @@ export class PrismaTransactionRepo implements ITransactionRepo {
           accountId: accountId,
           date: { contains: '/' + dateMonth + '/' }
         },
+        orderBy: [
+          { date: 'asc' },
+          { type: 'asc' }
+
+        ] ,
         include: {
           account: true,
           category: true,
