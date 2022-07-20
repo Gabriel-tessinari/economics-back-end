@@ -5,8 +5,4 @@ export class ApiError extends Error {
     super(message);
     this.status = status;
   }
-
-  static DBAccessError() {
-    return new ApiError(500, "Erro de acesso ao Banco de Dados.");
-  }
 }

@@ -8,7 +8,7 @@ export class GenerateMonthReportController {
 
   async execute(req: Request, res: Response) {
     const month = req.params.month;
-    const account = req.params.account;
+    const account = req.params.accountId;
 
     try {
       await this.usecase.execute(month, account);

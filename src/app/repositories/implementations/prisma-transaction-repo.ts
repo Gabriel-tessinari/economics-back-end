@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Transaction } from "../../entities/transaction";
 import { ApiError } from "../../utils/api-error";
 import { ITransactionRepo } from "../i-transaction-repo";
+import { PrismaToEntity } from "./mappers/prismaToEntity";
 
 const prisma = new PrismaClient;
 
@@ -11,6 +12,7 @@ export class PrismaTransactionRepo implements ITransactionRepo {
       await prisma.transaction.create({
         data: {
           id: transaction.id,
+          description: transaction.description,
           value: transaction.value,
           date: transaction.date,
           type: transaction.type,
@@ -20,7 +22,42 @@ export class PrismaTransactionRepo implements ITransactionRepo {
         }
       });
     } catch(err: any) {
-      throw ApiError.DBAccessError;
+      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+    }
+  }
+
+  async findByAccountIdAndDateMonth(accountId: string, dateMonth: string): Promise<Transaction[]> {
+    let transactions: Transaction[] = [];
+
+    try {
+      const response = await prisma.transaction.findMany({
+        where: {
+          accountId: accountId,
+          date: { contains: '/' + dateMonth + '/' }
+        },
+        include: {
+          account: true,
+          category: true,
+          subcategory: true
+        }
+      });
+
+      if(response) {
+        response.forEach(transaction => {
+          transactions.push(
+            PrismaToEntity.transaction(
+              transaction,
+              transaction.account,
+              transaction.category,
+              transaction.subcategory
+            )
+          );
+        });
+      }
+
+      return transactions;
+    } catch(err: any) {
+      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
     }
   }
 }

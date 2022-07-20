@@ -8,8 +8,8 @@ export class GenerateMonthReportUseCase {
   ) {}
 
   async execute(month: string, account: string) {
+    const transactions = await this.findAllTransactionCategoryUseCase.execute();
     let fileName = './pdf/' + account.toLowerCase() + month + '.pdf';
-    const categories = await this.findAllTransactionCategoryUseCase.execute();
     this.pdf.monthReport(fileName);
   }
 }

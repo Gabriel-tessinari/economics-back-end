@@ -1,3 +1,4 @@
+import { ObjectId } from 'bson';
 import { Account } from './account';
 import { TransactionType } from './enums/transaction-type';
 import { TransactionCategory } from './transaction-category';
@@ -17,7 +18,7 @@ type Props = {
 }
 
 export class Transaction {
-  protected _id?: string;
+  protected _id: string;
   public description: string;
   public value: number;
   public date: string;
@@ -34,7 +35,7 @@ export class Transaction {
   }
 
   public constructor(props: Props, id?: string) {
-    this._id = id;
+    id? this._id = id : this._id = new ObjectId().toString();
     this.description = props.description;
     this.value = props.value;
     this.date = props.date;

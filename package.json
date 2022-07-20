@@ -33,6 +33,7 @@
   "dependencies": {
     "@prisma/client": "^4.0.0",
     "@types/express": "^4.17.13",
+    "bson": "^4.6.5",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",

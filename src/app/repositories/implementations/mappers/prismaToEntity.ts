@@ -37,19 +37,20 @@ export class PrismaToEntity {
     transactionDB: TransactionDB, 
     accountDB: AccountDB, 
     categoryDB: Category, 
-    subcategoryDB: Subcategory
+    subcategoryDB?: Subcategory | null
   ): Transaction {
     let account = PrismaToEntity.account(accountDB);
     let category = PrismaToEntity.category(categoryDB);
-    let subcategory = PrismaToEntity.subcategory(subcategoryDB);
-
+    let subcategory: TransactionSubcategory | undefined;
     let subcategoryId: string | undefined;
-
-    if(transactionDB.subcategoryId) {
-      subcategoryId = transactionDB.subcategoryId;
-    } else {
-      subcategoryId = undefined;
-    }
+    
+    transactionDB.subcategoryId? 
+    subcategoryId = transactionDB.subcategoryId : 
+    subcategoryId = undefined;
+    
+    subcategoryDB?
+    subcategory = PrismaToEntity.subcategory(subcategoryDB) :
+    subcategory = undefined;
 
     return new Transaction(
       {
