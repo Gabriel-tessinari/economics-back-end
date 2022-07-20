@@ -1,10 +1,14 @@
 import ejs from 'ejs';
 import pdf from 'html-pdf';
+import { Transaction } from '../../entities/transaction';
 import { ApiError } from '../api-error';
 
 export class PdfGenerator {
-  public monthReport(fileName: string): void {
-    ejs.renderFile('./src/app/utils/pdfGenerator/month-report.ejs', {}, (err, html) => {
+  public monthReport(fileName: string, account: string, month: string, transactions: Transaction[]): void {
+    let total = transactions[0].account?.total;
+    let monthReportRequest = { month: month, account: account, total: total, transactions: transactions };
+
+    ejs.renderFile('./src/app/utils/pdfGenerator/month-report.ejs', monthReportRequest, (err, html) => {
       if(err) {
         console.log(err);
         throw new ApiError(500, "Erro ao gerar html.");

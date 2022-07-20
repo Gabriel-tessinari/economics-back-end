@@ -23,6 +23,7 @@ export class PrismaTransactionCategoryRepo implements ITransactionCategoryRepo {
 
       return categories;
     } catch(err: any) {
+      console.log(err);
       throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
     }
   }

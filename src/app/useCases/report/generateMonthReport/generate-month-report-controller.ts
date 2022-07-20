@@ -11,7 +11,7 @@ export class GenerateMonthReportController {
     const account = req.params.accountId;
 
     try {
-      await this.usecase.execute(month, account);
+      await this.usecase.execute(account, month);
       return res.status(200).send("Relatório gerado com sucesso.");
     } catch(err: any) {
       return res.status(err.status).send(err.message);

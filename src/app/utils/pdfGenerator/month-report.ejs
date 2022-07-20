@@ -24,10 +24,10 @@
   </style>
 </head>
 <body>
-  <h1>Relatório de 06/2022</h1>
+  <h1>Relatório de <%= month %>/2022</h1>
   <p>
-    Conta: ITAU <br>
-    Início do mês: R$1000.00 <br>
+    Conta: <%= account %> <br>
+    Início do mês: R$<%= total %> <br>
   </p>
   <hr>
   <table>
@@ -38,24 +38,21 @@
       <th>Valor</th>
       <th>Saldo</th>
     </tr>
-    <tr class="in">
-      <td>01/06/2022</td>
-      <td>Salário</td>
-      <td>TRABALHO/SALÁRIO</td>
-      <td>R$2000.00</td>
-      <td>R$3000.00</td>
-    </tr>
-    <tr class="out">
-      <td>15/06/2022</td>
-      <td>Gasto absurdo</td>
-      <td>LAZER</td>
-      <td>R$2500.00</td>
-      <td>R$500.00</td>
-    </tr>
+
+    <% for(let i = 0; i < transactions.length; i++) { %>
+      <% total = total - transactions[i].value %>
+      <tr class="<%= transactions[i].type == 'CREDIT' ? 'in' : 'out' %>">
+        <td><%= transactions[i].date %></td>
+        <td><%= transactions[i].description %></td>
+        <td><%= transactions[i].category.description %></td>
+        <td>R$<%= transactions[i].value %></td>
+        <td>R$<%= total %></td>
+      </tr>
+    <% } %>
   </table>
   <hr>
   <p>
-    Final do mês: R$500.00
+    Final do mês: R$<%= total %>
   </p>
 </body>
 </html>

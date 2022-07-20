@@ -1,5 +1,7 @@
 @url = http://localhost:3000/report
+@accountId = 62d753d43e38ac07e76f0d87
+@month = 07
 
 ###
-POST {{url}}/account/ITAU/month/7
+POST {{url}}/account/{{accountId}}/month/{{month}}
 Content-Type: application/json

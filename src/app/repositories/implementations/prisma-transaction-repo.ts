@@ -22,18 +22,20 @@ export class PrismaTransactionRepo implements ITransactionRepo {
         }
       });
     } catch(err: any) {
+      console.log(err);
       throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
     }
   }
 
   async findByAccountIdAndDateMonth(accountId: string, dateMonth: string): Promise<Transaction[]> {
     let transactions: Transaction[] = [];
+    let dateSearch = "/" + dateMonth + "/";
 
     try {
       const response = await prisma.transaction.findMany({
         where: {
           accountId: accountId,
-          date: { contains: '/' + dateMonth + '/' }
+          date: { contains: dateSearch }
         },
         orderBy: [
           { date: 'asc' },
@@ -62,6 +64,7 @@ export class PrismaTransactionRepo implements ITransactionRepo {
 
       return transactions;
     } catch(err: any) {
+      console.log(err);
       throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
     }
   }
