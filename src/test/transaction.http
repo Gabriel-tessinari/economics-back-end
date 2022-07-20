@@ -5,10 +5,10 @@ POST {{url}}
 Content-Type: application/json
 
 {
-  "description": "Picpay",
-  "value": 1802.93,
-  "date": "18/07/2022",
-  "type": "CREDIT",
-  "accountId": "30d39f31-56d2-4427-a550-1445bd6b282e",
-  "categoryId": "38956369-05c7-4a55-8198-59276ff56f87"
+  "description": "Supermercado",
+  "value": 180.21,
+  "date": "05/07/2022",
+  "type": "DEBIT",
+  "accountId": "62d753d43e38ac07e76f0d87",
+  "categoryId": "62d751c3c684e4fc38dfcc21"
 }

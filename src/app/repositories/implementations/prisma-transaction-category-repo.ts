@@ -1,7 +1,8 @@
-import { Category, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { TransactionCategory } from "../../entities/transaction-category";
 import { ApiError } from "../../utils/api-error";
 import { ITransactionCategoryRepo } from "../i-transaction-category-repo";
+import { PrismaToEntity } from "./mappers/prismaToEntity";
 
 const prisma = new PrismaClient;
 
@@ -11,14 +12,12 @@ export class PrismaTransactionCategoryRepo implements ITransactionCategoryRepo {
 
     try {
       const response = await prisma.category.findMany({
-        orderBy: {
-          description: "asc"
-        }
+        orderBy: { description: "asc" }
       });
 
       if(response) {
         response.forEach(category => {
-          categories.push(this.mapper(category));
+          categories.push(PrismaToEntity.category(category));
         });
       }
 
@@ -26,14 +25,5 @@ export class PrismaTransactionCategoryRepo implements ITransactionCategoryRepo {
     } catch(err: any) {
       throw ApiError.DBAccessError;
     }
-  }
-
-  private mapper(categoryDB: Category): TransactionCategory {
-    return new TransactionCategory(
-      {
-        description: categoryDB.description
-      },
-      categoryDB.id
-    );
   }
 }
