@@ -7,6 +7,21 @@ import { PrismaToEntity } from "./mappers/prismaToEntity";
 const prisma = new PrismaClient;
 
 export class PrismaAccountRepo implements IAccountRepo {
+  async create(account: Account): Promise<void> {
+    try {
+      await prisma.account.create({
+        data: {
+          id: account.id,
+          description: account.description,
+          total: account.total
+        }
+      });
+    } catch(err: any) {
+      console.log(err);
+      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+    }
+  }
+
   async findAll(): Promise<Account[]> {
     let accounts: Account[] = [];
 

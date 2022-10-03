@@ -1,5 +1,14 @@
 @url = http://localhost:3000/account
 
 ###
+POST {{url}}
+Content-Type: application/json
+
+{
+  "description": "TESTE",
+  "total": 20.00
+}
+
+###
 GET {{url}}
 Content-Type: application/json
