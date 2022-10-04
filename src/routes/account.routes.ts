@@ -1,7 +1,15 @@
 import { Router } from "express";
-import { createAccountController, findAllAccountController } from "../app/useCases/account";
+import { 
+  createAccountController,
+  deleteAccountByIdController,
+  findAllAccountController 
+} from "../app/useCases/account";
 
 const accountRouter = Router();
+
+accountRouter.delete('/', (req, res) => {
+  return deleteAccountByIdController.execute(req, res);
+});
 
 accountRouter.get('/', (req, res) => {
   return findAllAccountController.execute(req, res);

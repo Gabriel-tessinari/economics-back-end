@@ -22,6 +22,19 @@ export class PrismaAccountRepo implements IAccountRepo {
     }
   }
 
+  async deleteById(id: string): Promise<void> {
+    try {
+      await prisma.account.delete({
+        where: {
+          id: id
+        }
+      });
+    } catch(err: any) {
+      console.log(err);
+      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+    }
+  }
+
   async findAll(): Promise<Account[]> {
     let accounts: Account[] = [];
 
