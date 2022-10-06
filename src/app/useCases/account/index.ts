@@ -1,4 +1,4 @@
-import { PrismaAccountRepo } from "../../repositories/implementations/prisma-account-repo";
+import { PrismaAccountRepo } from "../../repositories/implementations/prisma/prisma-account-repo";
 import { CreateAccountController } from "./create/create-account-controller";
 import { CreateAccountUseCase } from "./create/create-account-usecase";
 import { DeleteAccountByIdController } from "./delete/delete-account-by-id-controller";

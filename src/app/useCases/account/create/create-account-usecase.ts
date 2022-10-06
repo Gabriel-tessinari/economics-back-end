@@ -1,5 +1,6 @@
 import { Account } from "../../../entities/account";
 import { IAccountRepo } from "../../../repositories/i-account-repo";
+import { ApiError } from "../../../utils/api-error";
 
 export class CreateAccountUseCase {
   constructor(
@@ -7,7 +8,10 @@ export class CreateAccountUseCase {
   ) {}
 
   async execute(req: Account) {
-    await this.repo.create(req);
+    const exists = await this.repo.findByDescription(req.description);
+
+    if(!exists) await this.repo.create(req);
+    else throw new ApiError(422, "Conta já existente.");
     return;
   }
 }

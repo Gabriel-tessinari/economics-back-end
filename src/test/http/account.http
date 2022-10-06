@@ -5,7 +5,7 @@ POST {{url}}
 Content-Type: application/json
 
 {
-  "description": "TESTE",
+  "description": "TESTE2",
   "total": 20.00
 }
 

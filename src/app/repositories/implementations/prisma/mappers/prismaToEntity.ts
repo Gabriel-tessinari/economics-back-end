@@ -1,9 +1,9 @@
 import { Account as AccountDB, Category, Subcategory, Transaction as TransactionDB } from "@prisma/client";
-import { Account } from "../../../entities/account";
-import { TransactionType } from "../../../entities/enums/transaction-type";
-import { Transaction } from "../../../entities/transaction";
-import { TransactionCategory } from "../../../entities/transaction-category";
-import { TransactionSubcategory } from "../../../entities/transaction-subcategory";
+import { Account } from "../../../../entities/account";
+import { TransactionType } from "../../../../entities/enums/transaction-type";
+import { Transaction } from "../../../../entities/transaction";
+import { TransactionCategory } from "../../../../entities/transaction-category";
+import { TransactionSubcategory } from "../../../../entities/transaction-subcategory";
 
 export class PrismaToEntity {
   static account(accountDB: AccountDB): Account {

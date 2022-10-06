@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { Account } from "../../entities/account";
-import { ApiError } from "../../utils/api-error";
-import { IAccountRepo } from "../i-account-repo";
+import { Account } from "../../../entities/account";
+import { ApiError } from "../../../utils/api-error";
+import { IAccountRepo } from "../../i-account-repo";
 import { PrismaToEntity } from "./mappers/prismaToEntity";
 
 const prisma = new PrismaClient;
@@ -50,6 +50,22 @@ export class PrismaAccountRepo implements IAccountRepo {
       }
 
       return accounts;
+    } catch(err: any) {
+      console.log(err);
+      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+    }
+  }
+
+  async findByDescription(description: string): Promise<Account | null> {
+    try {
+      const response = await prisma.account.findFirst({
+        where: {
+          description: description
+        }
+      });
+
+      if(response) return PrismaToEntity.account(response);
+      else return null;
     } catch(err: any) {
       console.log(err);
       throw new ApiError(500, "Erro de acesso ao Banco de Dados.");

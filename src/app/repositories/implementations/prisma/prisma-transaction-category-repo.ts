@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { TransactionCategory } from "../../entities/transaction-category";
-import { ApiError } from "../../utils/api-error";
-import { ITransactionCategoryRepo } from "../i-transaction-category-repo";
+import { TransactionCategory } from "../../../entities/transaction-category";
+import { ApiError } from "../../../utils/api-error";
+import { ITransactionCategoryRepo } from "../../i-transaction-category-repo";
 import { PrismaToEntity } from "./mappers/prismaToEntity";
 
 const prisma = new PrismaClient;

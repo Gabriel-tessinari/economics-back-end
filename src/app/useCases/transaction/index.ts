@@ -1,4 +1,4 @@
-import { PrismaTransactionRepo } from "../../repositories/implementations/prisma-transaction-repo";
+import { PrismaTransactionRepo } from "../../repositories/implementations/prisma/prisma-transaction-repo";
 import { CreateTransactionController } from "./create/create-transaction-controller";
 import { CreateTransactionUseCase } from "./create/create-transaction-usecase";
 import { FindByAccountIdAndDateMonthController } from "./findByAccountIdAndDateMonth/find-by-accountid-and-datemonth-controller";
