@@ -4,9 +4,9 @@ import { Transaction } from '../../entities/transaction';
 import { ApiError } from '../api-error';
 
 export class PdfGenerator {
-  public monthReport(fileName: string, account: string, month: string, transactions: Transaction[]): void {
+  public monthReport(fileName: string, account: string, month: string, year: number, transactions: Transaction[]): void {
     let total = transactions[0].account?.total;
-    let monthReportRequest = { month: month, account: account, total: total, transactions: transactions };
+    let monthReportRequest = { month: month, account: account, total: total, year: year, transactions: transactions };
 
     ejs.renderFile('./src/app/utils/pdfGenerator/month-report.ejs', monthReportRequest, (err, html) => {
       if(err) {

@@ -27,15 +27,14 @@ export class PrismaTransactionRepo implements ITransactionRepo {
     }
   }
 
-  async findByAccountIdAndDateMonth(accountId: string, dateMonth: string): Promise<Transaction[]> {
+  async findByAccountIdAndDateMonthYear(accountId: string, monthYear: string): Promise<Transaction[]> {
     let transactions: Transaction[] = [];
-    let dateSearch = "/" + dateMonth + "/";
 
     try {
       const response = await prisma.transaction.findMany({
         where: {
           accountId: accountId,
-          date: { contains: dateSearch }
+          date: { contains: monthYear }
         },
         orderBy: [
           { date: 'asc' },

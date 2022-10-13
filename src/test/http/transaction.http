@@ -1,6 +1,7 @@
 @url = http://localhost:3000/transaction
 @accountId = 62d753d43e38ac07e76f0d87
-@month= 07
+@month = 07
+@year = 2022
 
 ###
 POST {{url}}
@@ -16,4 +17,4 @@ Content-Type: application/json
 }
 
 ###
-GET {{url}}/account/{{accountId}}/month/{{month}}
+GET {{url}}/account/{{accountId}}/month/{{month}}/year/{{year}}
