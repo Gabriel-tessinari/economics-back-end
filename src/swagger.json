@@ -16,7 +16,9 @@
       "get": {
         "summary": "Listar contas",
         "description": "Lista todas as contas",
-        "tags": ["Accounts"],
+        "tags": [
+          "Accounts"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -26,6 +28,90 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Account"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro de acesso ao Banco de Dados."
+          }
+        }
+      }
+    },
+    "/category": {
+      "get": {
+        "summary": "Listar categorias das transações",
+        "description": "Lista todas as categorias",
+        "tags": [
+          "Categories"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionCategory"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro de acesso ao Banco de Dados."
+          }
+        }
+      }
+    },
+    "/transaction/account/{accountId}/month/{month}/year/{year}": {
+      "get": {
+        "summary": "Listar transações da conta no período informado",
+        "description": "Lista todas as transações da conta no período informado",
+        "operationId": "getOrderById",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID da conta",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "month",
+            "in": "path",
+            "description": "Mês das transações (número do mês com 0 na frente, caso menor que 10)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "description": "Ano das transações",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "tags": [
+          "Transactions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Transaction"
                   }
                 }
               }
@@ -51,6 +137,67 @@
           },
           "total": {
             "type": "number"
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "CREDIT",
+              "DEBIT"
+            ]
+          },
+          "accountId": {
+            "type": "string"
+          },
+          "subcategoryId": {
+            "type": "string"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "category": {
+            "$ref": "#/components/schemas/TransactionCategory"
+          },
+          "subcategory": {
+            "$ref": "#/components/schemas/TransactionSubcategory"
+          }
+        }
+      },
+      "TransactionCategory": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "TransactionSubcategory": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
           }
         }
       }

@@ -1,8 +1,8 @@
 import { PrismaTransactionRepo } from "../../repositories/implementations/prisma/prisma-transaction-repo";
 import { CreateTransactionController } from "./create/create-transaction-controller";
 import { CreateTransactionUseCase } from "./create/create-transaction-usecase";
-import { FindByAccountIdAndDateMonthYearController } from "./findByAccountIdAndDateMonth/find-by-accountid-and-datemonthyear-controller";
-import { FindByAccountIdAndDateMonthYearUseCase } from "./findByAccountIdAndDateMonth/find-by-accountid-and-datemonthyear-usecase";
+import { FindByAccountIdAndDateMonthYearController } from "./findByAccountIdAndDateMonthYear/find-by-accountid-and-datemonthyear-controller";
+import { FindByAccountIdAndDateMonthYearUseCase } from "./findByAccountIdAndDateMonthYear/find-by-accountid-and-datemonthyear-usecase";
 
 const repo = new PrismaTransactionRepo;
 

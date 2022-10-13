@@ -1,6 +1,6 @@
 import { ApiError } from "../../../utils/api-error";
 import { PdfGenerator } from "../../../utils/pdfGenerator/pdf-generator";
-import { FindByAccountIdAndDateMonthYearUseCase } from "../../transaction/findByAccountIdAndDateMonth/find-by-accountid-and-datemonthyear-usecase";
+import { FindByAccountIdAndDateMonthYearUseCase } from "../../transaction/findByAccountIdAndDateMonthYear/find-by-accountid-and-datemonthyear-usecase";
 
 export class GenerateMonthReportUseCase {
   constructor(
