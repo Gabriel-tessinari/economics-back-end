@@ -27,6 +27,19 @@ export class PrismaTransactionRepo implements ITransactionRepo {
     }
   }
 
+  async deleteById(id: string) {
+    try {
+      await prisma.transaction.delete({
+        where: {
+          id: id
+        }
+      });
+    } catch(err: any) {
+      console.log(err);
+      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+    }
+  }
+
   async findByAccountIdAndDateMonthYear(accountId: string, monthYear: string): Promise<Transaction[]> {
     let transactions: Transaction[] = [];
 

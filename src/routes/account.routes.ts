@@ -7,7 +7,7 @@ import {
 
 const accountRouter = Router();
 
-accountRouter.delete('/', (req, res) => {
+accountRouter.delete('/:id', (req, res) => {
   return deleteAccountByIdController.execute(req, res);
 });
 

@@ -4,6 +4,13 @@
 @year = 2022
 
 ###
+DELETE {{url}}/634ed5f3f3f24deff24efc38
+Content-Type: application/json
+
+###
+GET {{url}}/account/{{accountId}}/month/{{month}}/year/{{year}}
+
+###
 POST {{url}}
 Content-Type: application/json
 
@@ -16,5 +23,3 @@ Content-Type: application/json
   "categoryId": "62d751c3c684e4fc38dfcc21"
 }
 
-###
-GET {{url}}/account/{{accountId}}/month/{{month}}/year/{{year}}

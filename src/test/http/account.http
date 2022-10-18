@@ -1,6 +1,14 @@
 @url = http://localhost:3000/account
 
 ###
+DELETE {{url}}/633e157c47b43690c24c4f07
+Content-Type: application/json
+
+###
+GET {{url}}
+Content-Type: application/json
+
+###
 POST {{url}}
 Content-Type: application/json
 
@@ -8,7 +16,3 @@ Content-Type: application/json
   "description": "TESTE2",
   "total": 20.00
 }
-
-###
-GET {{url}}
-Content-Type: application/json

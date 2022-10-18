@@ -1,9 +1,9 @@
-import { IAccountRepo } from "../../../repositories/i-account-repo";
+import { ITransactionRepo } from "../../../repositories/i-transaction-repo";
 import { ApiError } from "../../../utils/api-error";
 
-export class DeleteAccountByIdUseCase {
+export class DeleteTransactionByIdUseCase {
   constructor(
-    private repo: IAccountRepo
+    private repo: ITransactionRepo
   ) {}
 
   async execute(id: string) {
