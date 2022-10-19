@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "@types/uuid": "^8.3.4",
     "jest": "^29.1.2",
     "prisma": "^4.0.0",
+    "rimraf": "^3.0.2",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.8.2",
     "ts-node-dev": "^2.0.0",
@@ -38,6 +40,7 @@
   "dependencies": {
     "@prisma/client": "^4.0.0",
     "@types/express": "^4.17.13",
+    "bson": "^4.6.5",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",

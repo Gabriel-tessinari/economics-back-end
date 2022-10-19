@@ -5,7 +5,6 @@
     "emitDecoratorMetadata": true,
     "noImplicitAny": true,
     "module": "commonjs",
-    "rootDir": "./src",
     "outDir": "./dist",
     "removeComments": true,
     "esModuleInterop": true,
@@ -15,5 +14,12 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "lib": ["esnext"]
-  }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "jest.config.ts",
+    "**/*.spec.ts"
+  ]
 }

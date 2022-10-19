@@ -35,7 +35,7 @@ export class Transaction {
   }
 
   public constructor(props: Props, id?: string) {
-    id? this._id = id : this._id = new ObjectId().toString();
+    id? this._id = id : this._id = new ObjectId().toHexString();
     this.description = props.description;
     this.value = props.value;
     this.date = props.date;
