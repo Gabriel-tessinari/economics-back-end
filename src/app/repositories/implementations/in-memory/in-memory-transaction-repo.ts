@@ -5,6 +5,10 @@ import { ITransactionRepo } from "../../i-transaction-repo";
 export class InMemoryTransactionRepo implements ITransactionRepo {
   private transactions: Transaction[] = [];
 
+  setTransactionsEmpty() {
+    this.transactions = [];
+  }
+
   async create(transaction: Transaction): Promise<void> {
     const req: Transaction = new Transaction(transaction, uuidv4());
 
