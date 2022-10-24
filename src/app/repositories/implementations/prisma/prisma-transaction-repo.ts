@@ -80,4 +80,33 @@ export class PrismaTransactionRepo implements ITransactionRepo {
       throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
     }
   }
+
+  async findById(id: string): Promise<Transaction | null> {
+    try {
+      const response = await prisma.transaction.findFirst({
+        where: {
+          id: id
+        },
+        include: {
+          account: true,
+          category: true,
+          subcategory: true
+        }
+      });
+
+      if(response) {
+        return PrismaToEntity.transaction(
+          response,
+          response.account,
+          response.category,
+          response.subcategory
+        )
+      }
+
+      return null;
+    } catch(err: any) {
+      console.log(err);
+      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+    }
+  }
 }
