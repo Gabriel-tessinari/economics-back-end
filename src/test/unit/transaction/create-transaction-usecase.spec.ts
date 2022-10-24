@@ -2,7 +2,6 @@ import { TransactionType } from "../../../app/entities/enums/transaction-type";
 import { Transaction } from "../../../app/entities/transaction";
 import { InMemoryTransactionRepo } from "../../../app/repositories/implementations/in-memory/in-memory-transaction-repo";
 import { CreateTransactionUseCase } from "../../../app/useCases/transaction/create/create-transaction-usecase";
-import { ApiError } from "../../../app/utils/api-error";
 
 describe('Create transaction', () => {
   let repo: InMemoryTransactionRepo;
