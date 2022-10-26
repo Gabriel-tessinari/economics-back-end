@@ -1,8 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { TransactionCategory } from "../../../entities/transaction-category";
+import { ApiError } from "../../../utils/api-error";
 import { ITransactionCategoryRepo } from "../../i-transaction-category-repo";
 
-export class InMemoryTransactionCategoryRepo implements ITransactionCategoryRepo {
+export class InMemoryCategoryRepo implements ITransactionCategoryRepo {
   private categories: TransactionCategory[] = [];
 
   setCategoriesEmpty() {
@@ -11,6 +12,12 @@ export class InMemoryTransactionCategoryRepo implements ITransactionCategoryRepo
 
   async create(category: TransactionCategory): Promise<void> {
     const req: TransactionCategory = new TransactionCategory(category, uuidv4());
+
+    const exists = this.categories.find(item => {
+      return item.description == category.description;
+    });
+
+    if(exists) throw ApiError.errorToAccessDB();
 
     this.categories.push(req);
   }
