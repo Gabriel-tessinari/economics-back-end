@@ -7,6 +7,33 @@ import { PrismaToEntity } from "./mappers/prismaToEntity";
 const prisma = new PrismaClient;
 
 export class PrismaTransactionCategoryRepo implements ITransactionCategoryRepo {
+  async create(category: TransactionCategory): Promise<void> {
+    try {
+      await prisma.category.create({
+        data: {
+          id: category.id,
+          description: category.description
+        }
+      });
+    } catch(err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async deleteById(id: string): Promise<void> {
+    try {
+      await prisma.category.delete({
+        where: {
+          id: id
+        }
+      });
+    } catch(err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
+    }
+  }
+  
   async findAll(): Promise<TransactionCategory[]> {
     let categories: TransactionCategory[] = [];
 
@@ -24,7 +51,23 @@ export class PrismaTransactionCategoryRepo implements ITransactionCategoryRepo {
       return categories;
     } catch(err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async findById(id: string): Promise<TransactionCategory | null> {
+    try {
+      const response = await prisma.category.findFirst({
+        where: {
+          id: id
+        }
+      });
+
+      if(response) return PrismaToEntity.category(response);
+      return null;
+    } catch(err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
     }
   }
 }

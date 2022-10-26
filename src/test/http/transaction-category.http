@@ -3,3 +3,15 @@
 ###
 GET {{url}}
 Content-Type: application/json
+
+###
+POST {{url}}
+Content-Type: application/json
+
+{
+  "description": "LAZER"
+}
+
+###
+DELETE {{url}}/63595f2a02aeefc376ec91d6
+Content-Type: application/json
