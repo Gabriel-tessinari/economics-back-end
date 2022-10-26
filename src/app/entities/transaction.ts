@@ -2,7 +2,7 @@ import { ObjectId } from 'bson';
 import { Account } from './account';
 import { TransactionType } from './enums/transaction-type';
 import { TransactionCategory } from './transaction-category';
-import { TransactionSubcategory } from './transaction-subcategory';
+import { TransactionSubcategory } from './subcategory';
 
 type Props = {
   description: string;

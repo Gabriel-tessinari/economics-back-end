@@ -3,7 +3,7 @@ type Props = {
   categoryId: string;
 }
 
-export class TransactionSubcategory {
+export class Subcategory {
   protected _id?: string;
   public description: string;
   public categoryId: string;

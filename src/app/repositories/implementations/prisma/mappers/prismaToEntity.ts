@@ -1,9 +1,14 @@
-import { Account as AccountDB, Category, Subcategory, Transaction as TransactionDB } from "@prisma/client";
+import { 
+  Account as AccountDB, 
+  Category, 
+  Subcategory as SubcategoryDB, 
+  Transaction as TransactionDB 
+} from "@prisma/client";
 import { Account } from "../../../../entities/account";
 import { TransactionType } from "../../../../entities/enums/transaction-type";
 import { Transaction } from "../../../../entities/transaction";
 import { TransactionCategory } from "../../../../entities/transaction-category";
-import { TransactionSubcategory } from "../../../../entities/transaction-subcategory";
+import { Subcategory } from "../../../../entities/subcategory";
 
 export class PrismaToEntity {
   static account(accountDB: AccountDB): Account {
@@ -23,8 +28,8 @@ export class PrismaToEntity {
     );
   }
 
-  static subcategory(subcategoryDB: Subcategory): TransactionSubcategory {
-    return new TransactionSubcategory(
+  static subcategory(subcategoryDB: SubcategoryDB): Subcategory {
+    return new Subcategory(
       { 
         description: subcategoryDB.description,
         categoryId: subcategoryDB.categoryId
@@ -37,11 +42,11 @@ export class PrismaToEntity {
     transactionDB: TransactionDB, 
     accountDB: AccountDB, 
     categoryDB: Category, 
-    subcategoryDB?: Subcategory | null
+    subcategoryDB?: SubcategoryDB | null
   ): Transaction {
     let account = PrismaToEntity.account(accountDB);
     let category = PrismaToEntity.category(categoryDB);
-    let subcategory: TransactionSubcategory | undefined;
+    let subcategory: Subcategory | undefined;
     let subcategoryId: string | undefined;
     
     transactionDB.subcategoryId? 
