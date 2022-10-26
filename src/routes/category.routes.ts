@@ -1,11 +1,9 @@
 import { Router } from "express";
 import { 
   createCategoryController, 
-  deleteCategoryByIdController 
+  deleteCategoryByIdController, 
+  findAllCategoryController
 } from "../app/features/category";
-import {
-  findAllTransactionCategoryController 
-} from "../app/useCases/transactionCategory";
 
 const categoryRouter = Router();
 
@@ -18,7 +16,7 @@ categoryRouter.delete('/:id', (req, res) => {
 });
 
 categoryRouter.get('/', (req, res) => {
-  return findAllTransactionCategoryController.execute(req, res);
+  return findAllCategoryController.execute(req, res);
 });
 
 export { categoryRouter }

@@ -1,7 +1,7 @@
 import { TransactionCategory } from "../../../entities/transaction-category";
 import { ITransactionCategoryRepo } from "../../../repositories/i-transaction-category-repo";
 
-export class FindAllTransactionCategoryUseCase {
+export class FindAllCategoryService {
   constructor(
     private repo: ITransactionCategoryRepo
   ) {}

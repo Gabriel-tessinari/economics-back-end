@@ -9,7 +9,7 @@ POST {{url}}
 Content-Type: application/json
 
 {
-  "description": "LAZER"
+  "description": "SAÚDE"
 }
 
 ###

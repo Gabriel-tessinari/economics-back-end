@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { FindAllTransactionCategoryUseCase } from "./find-all-transaction-category-usecase";
+import { FindAllCategoryService } from "./find-all-category.service";
 
-export class FindAllTransactionCategoryController {
+export class FindAllCategoryController {
   constructor(
-    private usecase: FindAllTransactionCategoryUseCase
+    private service: FindAllCategoryService
   ) {}
 
   async execute(req: Request, res: Response) {
     try {
-      const response = await this.usecase.execute();
+      const response = await this.service.execute();
       return res.status(200).send(response);
     } catch(err: any) {
       return res.status(err.status).send(err.message);
