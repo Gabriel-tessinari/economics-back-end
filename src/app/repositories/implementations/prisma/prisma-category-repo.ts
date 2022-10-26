@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { TransactionCategory } from "../../../entities/transaction-category";
+import { Category } from "../../../entities/category";
 import { ApiError } from "../../../utils/api-error";
 import { ICategoryRepo } from "../../i-category-repo";
 import { PrismaToEntity } from "./mappers/prismaToEntity";
@@ -7,7 +7,7 @@ import { PrismaToEntity } from "./mappers/prismaToEntity";
 const prisma = new PrismaClient;
 
 export class PrismaCategoryRepo implements ICategoryRepo {
-  async create(category: TransactionCategory): Promise<void> {
+  async create(category: Category): Promise<void> {
     try {
       await prisma.category.create({
         data: {
@@ -34,8 +34,8 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     }
   }
   
-  async findAll(): Promise<TransactionCategory[]> {
-    let categories: TransactionCategory[] = [];
+  async findAll(): Promise<Category[]> {
+    let categories: Category[] = [];
 
     try {
       const response = await prisma.category.findMany({
@@ -55,7 +55,7 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     }
   }
 
-  async findById(id: string): Promise<TransactionCategory | null> {
+  async findById(id: string): Promise<Category | null> {
     try {
       const response = await prisma.category.findFirst({
         where: {

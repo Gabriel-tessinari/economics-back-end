@@ -1,6 +1,6 @@
 import { DeleteCategoryByIdService } from "./delete-category-by-id.service";
 import { InMemoryCategoryRepo } from "../../../repositories/implementations/in-memory/in-memory-category-repo";
-import { TransactionCategory } from "../../../entities/transaction-category";
+import { Category } from "../../../entities/category";
 
 describe('Delete category by id', () => {
   let repo: InMemoryCategoryRepo;
@@ -13,11 +13,11 @@ describe('Delete category by id', () => {
   });
 
   beforeEach(async () => {
-    const category1 = new TransactionCategory({
+    const category1 = new Category({
       description: 'toStay'
     });
 
-    const category2 = new TransactionCategory({
+    const category2 = new Category({
       description: 'toDelete'
     });
 

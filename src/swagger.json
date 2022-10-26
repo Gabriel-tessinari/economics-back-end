@@ -58,7 +58,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TransactionCategory"
+                    "$ref": "#/components/schemas/Category"
                   }
                 }
               }
@@ -200,14 +200,14 @@
             "$ref": "#/components/schemas/Account"
           },
           "category": {
-            "$ref": "#/components/schemas/TransactionCategory"
+            "$ref": "#/components/schemas/Category"
           },
           "subcategory": {
-            "$ref": "#/components/schemas/TransactionSubcategory"
+            "$ref": "#/components/schemas/Subcategory"
           }
         }
       },
-      "TransactionCategory": {
+      "Category": {
         "type": "object",
         "properties": {
           "_id": {
@@ -218,7 +218,7 @@
           }
         }
       },
-      "TransactionSubcategory": {
+      "Subcategory": {
         "type": "object",
         "properties": {
           "_id": {

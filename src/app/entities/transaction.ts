@@ -1,8 +1,8 @@
 import { ObjectId } from 'bson';
 import { Account } from './account';
 import { TransactionType } from './enums/transaction-type';
-import { TransactionCategory } from './transaction-category';
-import { TransactionSubcategory } from './subcategory';
+import { Category } from './category';
+import { Subcategory } from './subcategory';
 
 type Props = {
   description: string;
@@ -13,8 +13,8 @@ type Props = {
   categoryId: string;
   subcategoryId?: string;
   account?: Account;
-  category?: TransactionCategory;
-  subcategory?: TransactionSubcategory;
+  category?: Category;
+  subcategory?: Subcategory;
 }
 
 export class Transaction {
@@ -27,8 +27,8 @@ export class Transaction {
   public categoryId: string;
   public subcategoryId?: string;
   public account?: Account;
-  public category?: TransactionCategory;
-  public subcategory?: TransactionSubcategory;
+  public category?: Category;
+  public subcategory?: Subcategory;
 
   public get id() {
     return this._id;

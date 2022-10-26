@@ -1,12 +1,12 @@
-import { TransactionCategory } from "../../../entities/transaction-category";
-import { ITransactionCategoryRepo } from "../../../repositories/i-category-repo";
+import { Category } from "../../../entities/category";
+import { ICategoryRepo } from "../../../repositories/i-category-repo";
 
 export class CreateCategoryService {
   constructor(
-    private repo: ITransactionCategoryRepo
+    private repo: ICategoryRepo
   ) {}
 
-  async execute(req: TransactionCategory) {
+  async execute(req: Category) {
     await this.repo.create(req);
     return;
   }

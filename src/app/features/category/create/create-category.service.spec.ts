@@ -1,4 +1,4 @@
-import { TransactionCategory } from "../../../entities/transaction-category";
+import { Category } from "../../../entities/category";
 import { InMemoryCategoryRepo } from "../../../repositories/implementations/in-memory/in-memory-category-repo";
 import { ApiError } from "../../../utils/api-error";
 import { CreateCategoryService } from "./create-category.service";
@@ -17,7 +17,7 @@ describe('Create category', () => {
   });
 
   it('should be able to create a category', async () => {
-    const category = new TransactionCategory({
+    const category = new Category({
       description: 'Test'
     });
 
@@ -30,7 +30,7 @@ describe('Create category', () => {
   });
 
   it('should not be able to create category with same description', async () => {
-    const category = new TransactionCategory({
+    const category = new Category({
       description: 'Test'
     });
 

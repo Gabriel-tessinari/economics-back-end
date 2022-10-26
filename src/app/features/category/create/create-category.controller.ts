@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TransactionCategory } from "../../../entities/transaction-category";
+import { Category } from "../../../entities/category";
 import { CreateCategoryService } from "./create-category.service";
 
 export class CreateCategoryController {
@@ -8,7 +8,7 @@ export class CreateCategoryController {
   ) {}
 
   async execute(req: Request, res: Response) {
-    const category = new TransactionCategory(req.body);
+    const category = new Category(req.body);
     
     try {
       await this.service.execute(category);

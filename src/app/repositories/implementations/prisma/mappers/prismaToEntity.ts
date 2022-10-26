@@ -1,13 +1,13 @@
 import { 
   Account as AccountDB, 
-  Category, 
+  Category as CategoryDB, 
   Subcategory as SubcategoryDB, 
   Transaction as TransactionDB 
 } from "@prisma/client";
 import { Account } from "../../../../entities/account";
 import { TransactionType } from "../../../../entities/enums/transaction-type";
 import { Transaction } from "../../../../entities/transaction";
-import { TransactionCategory } from "../../../../entities/transaction-category";
+import { Category } from "../../../../entities/category";
 import { Subcategory } from "../../../../entities/subcategory";
 
 export class PrismaToEntity {
@@ -21,8 +21,8 @@ export class PrismaToEntity {
     );
   }
 
-  static category(categoryDB: Category): TransactionCategory {
-    return new TransactionCategory(
+  static category(categoryDB: CategoryDB): Category {
+    return new Category(
       { description: categoryDB.description }, 
       categoryDB.id
     );
@@ -41,7 +41,7 @@ export class PrismaToEntity {
   static transaction(
     transactionDB: TransactionDB, 
     accountDB: AccountDB, 
-    categoryDB: Category, 
+    categoryDB: CategoryDB, 
     subcategoryDB?: SubcategoryDB | null
   ): Transaction {
     let account = PrismaToEntity.account(accountDB);

@@ -1,12 +1,12 @@
-import { TransactionCategory } from "../../../entities/transaction-category";
-import { ITransactionCategoryRepo } from "../../../repositories/i-category-repo";
+import { Category } from "../../../entities/category";
+import { ICategoryRepo } from "../../../repositories/i-category-repo";
 
 export class FindAllCategoryService {
   constructor(
-    private repo: ITransactionCategoryRepo
+    private repo: ICategoryRepo
   ) {}
 
-  async execute(): Promise<TransactionCategory[]> {
+  async execute(): Promise<Category[]> {
     let response = await this.repo.findAll();
     return response;
   }

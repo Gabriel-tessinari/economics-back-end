@@ -1,6 +1,6 @@
 import { FindAllCategoryService } from "./find-all-category.service";
 import { InMemoryCategoryRepo } from "../../../repositories/implementations/in-memory/in-memory-category-repo";
-import { TransactionCategory } from "../../../entities/transaction-category";
+import { Category } from "../../../entities/category";
 
 describe('Find all categories', () => {
   let repo: InMemoryCategoryRepo;
@@ -12,7 +12,7 @@ describe('Find all categories', () => {
   });
 
   beforeEach(async () => {
-    const category = new TransactionCategory({
+    const category = new Category({
       description: 'Test'
     });
 
@@ -24,7 +24,7 @@ describe('Find all categories', () => {
   });
 
   it('should be able to find 1 and after post find 2', async () => {
-    const category = new TransactionCategory({
+    const category = new Category({
       description: 'Test2'
     });
 

@@ -1,8 +1,8 @@
-import { ITransactionCategoryRepo } from "../../../repositories/i-category-repo";
+import { ICategoryRepo } from "../../../repositories/i-category-repo";
 
 export class DeleteCategoryByIdService {
   constructor(
-    private repo: ITransactionCategoryRepo
+    private repo: ICategoryRepo
   ) {}
 
   async execute(id: string) {
