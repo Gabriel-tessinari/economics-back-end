@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { TransactionCategory } from "../../../entities/transaction-category";
 import { ApiError } from "../../../utils/api-error";
-import { ITransactionCategoryRepo } from "../../i-transaction-category-repo";
+import { ICategoryRepo } from "../../i-category-repo";
 
-export class InMemoryCategoryRepo implements ITransactionCategoryRepo {
+export class InMemoryCategoryRepo implements ICategoryRepo {
   private categories: TransactionCategory[] = [];
 
   setCategoriesEmpty() {

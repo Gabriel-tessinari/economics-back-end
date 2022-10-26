@@ -1,5 +1,5 @@
 import { TransactionCategory } from "../../../entities/transaction-category";
-import { ITransactionCategoryRepo } from "../../../repositories/i-transaction-category-repo";
+import { ITransactionCategoryRepo } from "../../../repositories/i-category-repo";
 
 export class CreateCategoryService {
   constructor(

@@ -1,4 +1,4 @@
-import { ITransactionCategoryRepo } from "../../../repositories/i-transaction-category-repo";
+import { ITransactionCategoryRepo } from "../../../repositories/i-category-repo";
 
 export class DeleteCategoryByIdService {
   constructor(

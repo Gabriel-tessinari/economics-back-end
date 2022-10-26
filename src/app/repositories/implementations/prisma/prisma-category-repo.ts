@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { TransactionCategory } from "../../../entities/transaction-category";
 import { ApiError } from "../../../utils/api-error";
-import { ITransactionCategoryRepo } from "../../i-transaction-category-repo";
+import { ICategoryRepo } from "../../i-category-repo";
 import { PrismaToEntity } from "./mappers/prismaToEntity";
 
 const prisma = new PrismaClient;
 
-export class PrismaTransactionCategoryRepo implements ITransactionCategoryRepo {
+export class PrismaCategoryRepo implements ICategoryRepo {
   async create(category: TransactionCategory): Promise<void> {
     try {
       await prisma.category.create({
