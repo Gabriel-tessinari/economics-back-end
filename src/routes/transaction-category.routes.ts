@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { createCategoryController } from "../app/features/category";
 import { 
   createTransactionCategoryController, 
   deleteTransactionCategoryByIdController, 
@@ -8,7 +9,7 @@ import {
 const transactionCategoryRouter = Router();
 
 transactionCategoryRouter.post('/', (req, res) => {
-  return createTransactionCategoryController.execute(req, res);
+  return createCategoryController.execute(req, res);
 });
 
 transactionCategoryRouter.delete('/:id', (req, res) => {

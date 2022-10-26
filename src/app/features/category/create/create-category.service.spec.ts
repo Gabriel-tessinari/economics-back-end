@@ -1,14 +1,14 @@
 import { TransactionCategory } from "../../../entities/transaction-category";
 import { InMemoryTransactionCategoryRepo } from "../../../repositories/implementations/in-memory/in-memory-transaction-category-repo";
-import { CreateTransactionCategoryUseCase } from "./create-transaction-category-usecase";
+import { CreateCategoryService } from "./create-category.service";
 
 describe('Create category', () => {
   let repo: InMemoryTransactionCategoryRepo;
-  let useCase: CreateTransactionCategoryUseCase;
+  let service: CreateCategoryService;
 
   beforeAll(() => {
     repo = new InMemoryTransactionCategoryRepo();
-    useCase = new CreateTransactionCategoryUseCase(repo);
+    service = new CreateCategoryService(repo);
   });
 
   it('should be able to create a category', async () => {
@@ -17,7 +17,7 @@ describe('Create category', () => {
     });
 
     expect((await repo.findAll()).length).toBe(0);
-    expect(await useCase.execute(category)).toBeUndefined();
+    expect(await service.execute(category)).toBeUndefined();
 
     let response = await repo.findAll();
     expect(response.length).toBe(1);
