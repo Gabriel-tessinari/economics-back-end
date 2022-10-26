@@ -1,6 +1,6 @@
 import { ITransactionCategoryRepo } from "../../../repositories/i-transaction-category-repo";
 
-export class DeleteTransactionCategoryByIdUseCase {
+export class DeleteCategoryByIdService {
   constructor(
     private repo: ITransactionCategoryRepo
   ) {}

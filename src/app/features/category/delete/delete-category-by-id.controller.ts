@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { DeleteTransactionCategoryByIdUseCase } from "./delete-transaction-category-by-id-usecase";
+import { DeleteCategoryByIdService } from "./delete-category-by-id.service";
 
-export class DeleteTransactionCategoryByIdController {
+export class DeleteCategoryByIdController {
   constructor(
-    private usecase: DeleteTransactionCategoryByIdUseCase
+    private service: DeleteCategoryByIdService
   ) {}
 
   async execute(req: Request, res: Response) {
     const id = req.params.id;
     
     try {
-      await this.usecase.execute(id);
+      await this.service.execute(id);
       return res.status(200).send("Categoria excluída com sucesso.");
     } catch(err: any) {
       return res.status(err.status).send(err.message);
