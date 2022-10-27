@@ -1,7 +1,7 @@
 type Props = {
   description: string;
   total: number;
-}
+};
 
 export class Account {
   protected _id?: string;
@@ -16,5 +16,9 @@ export class Account {
     this._id = id;
     this.description = props.description;
     this.total = props.total;
+  }
+
+  public toUpperCase() {
+    this.description = this.description.toUpperCase();
   }
 }
