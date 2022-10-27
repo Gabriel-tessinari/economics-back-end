@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
-import { GenerateMonthReportUseCase } from "./generate-month-report-usecase";
+import { GenerateMonthReportService } from "./generate-month-report.service";
 
 export class GenerateMonthReportController {
-  constructor(
-    private usecase: GenerateMonthReportUseCase
-  ) {}
+  constructor(private service: GenerateMonthReportService) {}
 
   async execute(req: Request, res: Response) {
     const month = req.params.month;
@@ -12,9 +10,9 @@ export class GenerateMonthReportController {
     const year = parseInt(req.params.year);
 
     try {
-      await this.usecase.execute(account, month, year);
+      await this.service.execute(account, month, year);
       return res.status(200).send("Relatório gerado com sucesso.");
-    } catch(err: any) {
+    } catch (err: any) {
       return res.status(err.status).send(err.message);
     }
   }
