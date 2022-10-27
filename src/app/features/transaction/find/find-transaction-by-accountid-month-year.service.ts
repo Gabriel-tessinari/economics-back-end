@@ -10,7 +10,7 @@ export class FindTransactionByAccountIdMonthYearService {
     year: number
   ): Promise<Transaction[]> {
     const monthYear = "/" + month + "/" + year;
-    let response = await this.repo.findByAccountIdAndDateMonthYear(
+    let response = await this.repo.findByAccountIdMonthYear(
       accountId,
       monthYear
     );

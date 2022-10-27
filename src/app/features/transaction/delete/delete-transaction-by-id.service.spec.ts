@@ -40,8 +40,7 @@ describe("Create transaction", () => {
     await repo.create(transaction1);
     await repo.create(transaction2);
 
-    id = (await repo.findByAccountIdAndDateMonthYear(accountId, monthYear))[1]
-      .id;
+    id = (await repo.findByAccountIdMonthYear(accountId, monthYear))[1].id;
   });
 
   afterEach(() => {
@@ -52,15 +51,12 @@ describe("Create transaction", () => {
     const spy = jest.spyOn(repo, "findById");
 
     expect(
-      (await repo.findByAccountIdAndDateMonthYear(accountId, monthYear)).length
+      (await repo.findByAccountIdMonthYear(accountId, monthYear)).length
     ).toBe(2);
     expect(await service.execute(id)).toBeUndefined();
     expect(spy).toBeCalledTimes(1);
 
-    const response = await repo.findByAccountIdAndDateMonthYear(
-      accountId,
-      monthYear
-    );
+    const response = await repo.findByAccountIdMonthYear(accountId, monthYear);
     expect(response.length).toBe(1);
     expect(response[0].description).toBe("toStay");
 
@@ -72,12 +68,12 @@ describe("Create transaction", () => {
     const id = "notAnIdInTheList";
 
     expect(
-      (await repo.findByAccountIdAndDateMonthYear(accountId, monthYear)).length
+      (await repo.findByAccountIdMonthYear(accountId, monthYear)).length
     ).toBe(2);
     expect(await service.execute(id)).toBeUndefined();
     expect(spy).toBeCalledTimes(0);
     expect(
-      (await repo.findByAccountIdAndDateMonthYear(accountId, monthYear)).length
+      (await repo.findByAccountIdMonthYear(accountId, monthYear)).length
     ).toBe(2);
 
     spy.mockRestore();

@@ -25,11 +25,11 @@ describe("Create transaction", () => {
     });
 
     expect(
-      (await repo.findByAccountIdAndDateMonthYear(accountId, monthYear)).length
+      (await repo.findByAccountIdMonthYear(accountId, monthYear)).length
     ).toBe(0);
     expect(await service.execute(transaction)).toBeUndefined();
     expect(
-      (await repo.findByAccountIdAndDateMonthYear(accountId, monthYear)).length
+      (await repo.findByAccountIdMonthYear(accountId, monthYear)).length
     ).toBe(1);
   });
 });

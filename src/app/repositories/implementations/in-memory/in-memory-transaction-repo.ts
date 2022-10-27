@@ -16,18 +16,21 @@ export class InMemoryTransactionRepo implements ITransactionRepo {
   }
 
   async deleteById(id: string): Promise<void> {
-    const response = this.transactions.filter(item => {
+    const response = this.transactions.filter((item) => {
       return item.id != id;
     });
 
     this.transactions = response;
   }
 
-  async findByAccountIdAndDateMonthYear(accountId: string, monthYear: string): Promise<Transaction[]> {
+  async findByAccountIdMonthYear(
+    accountId: string,
+    monthYear: string
+  ): Promise<Transaction[]> {
     const response: Transaction[] = [];
 
-    this.transactions.map(item => {
-      if(item.accountId == accountId && item.date.includes(monthYear)) {
+    this.transactions.map((item) => {
+      if (item.accountId == accountId && item.date.includes(monthYear)) {
         response.push(item);
       }
     });
@@ -36,11 +39,11 @@ export class InMemoryTransactionRepo implements ITransactionRepo {
   }
 
   async findById(id: string): Promise<Transaction | null> {
-    const transaction = this.transactions.find(item => {
+    const transaction = this.transactions.find((item) => {
       return item.id == id;
     });
 
-    if(transaction) return transaction;
+    if (transaction) return transaction;
     return null;
   }
 }
