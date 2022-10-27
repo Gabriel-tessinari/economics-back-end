@@ -2,7 +2,7 @@ import { DeleteCategoryByIdService } from "./delete-category-by-id.service";
 import { InMemoryCategoryRepo } from "../../../repositories/implementations/in-memory/in-memory-category-repo";
 import { Category } from "../../../entities/category";
 
-describe('Delete category by id', () => {
+describe("Delete category by id", () => {
   let repo: InMemoryCategoryRepo;
   let service: DeleteCategoryByIdService;
   let id: string | undefined;
@@ -14,11 +14,11 @@ describe('Delete category by id', () => {
 
   beforeEach(async () => {
     const category1 = new Category({
-      description: 'toStay'
+      description: "toStay",
     });
 
     const category2 = new Category({
-      description: 'toDelete'
+      description: "toDelete",
     });
 
     await repo.create(category1);
@@ -31,25 +31,25 @@ describe('Delete category by id', () => {
     repo.setCategoriesEmpty();
   });
 
-  it('should be able to delete a category', async () => {
-    const spy = jest.spyOn(repo, 'findById');
+  it("should be able to delete a category", async () => {
+    const spy = jest.spyOn(repo, "findById");
 
-    if(id) {
+    if (id) {
       expect((await repo.findAll()).length).toBe(2);
       expect(await service.execute(id)).toBeUndefined();
       expect(spy).toBeCalledTimes(1);
     }
-    
+
     const response = await repo.findAll();
     expect(response.length).toBe(1);
-    expect(response[0].description).toBe('toStay');
+    expect(response[0].description).toBe("toStay");
 
     spy.mockRestore();
   });
 
-  it('should return undefined when do not find by id', async () => {
-    const spy = jest.spyOn(repo, 'deleteById');
-    const id = 'notAnIdInTheList';
+  it("should return undefined when do not find by id", async () => {
+    const spy = jest.spyOn(repo, "deleteById");
+    const id = "notAnIdInTheList";
 
     expect((await repo.findAll()).length).toBe(2);
     expect(await service.execute(id)).toBeUndefined();
