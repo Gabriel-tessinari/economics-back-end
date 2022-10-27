@@ -14,4 +14,8 @@ export class Category {
     this._id = id;
     this.description = props.description;
   }
+
+  public toLowerCase() {
+    this.description = this.description.toLowerCase();
+  }
 }

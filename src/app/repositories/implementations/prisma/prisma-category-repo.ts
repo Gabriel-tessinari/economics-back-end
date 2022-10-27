@@ -55,6 +55,22 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     }
   }
 
+  async findByDescription(description: string): Promise<Category | null> {
+    try {
+      const response = await prisma.category.findFirst({
+        where: {
+          description: description
+        }
+      });
+
+      if(response) return PrismaToEntity.category(response);
+      return null;
+    } catch(err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
   async findById(id: string): Promise<Category | null> {
     try {
       const response = await prisma.category.findFirst({
