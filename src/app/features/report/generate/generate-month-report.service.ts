@@ -1,16 +1,16 @@
 import { ApiError } from "../../../utils/api-error";
 import { PdfGenerator } from "../../../utils/pdfGenerator/pdf-generator";
-import { FindByAccountIdAndDateMonthYearUseCase } from "../../../useCases/transaction/findByAccountIdAndDateMonthYear/find-by-accountid-and-datemonthyear-usecase";
+import { FindTransactionByAccountIdMonthYearService } from "../../transaction/find/find-transaction-by-accountid-month-year.service";
 
 export class GenerateMonthReportService {
   constructor(
     private pdf: PdfGenerator,
-    private findByAccountIdAndDateMonthYearUseCase: FindByAccountIdAndDateMonthYearUseCase
+    private findTransactionByAccountIdMonthYearService: FindTransactionByAccountIdMonthYearService
   ) {}
 
   async execute(accountId: string, month: string, year: number) {
     const transactions =
-      await this.findByAccountIdAndDateMonthYearUseCase.execute(
+      await this.findTransactionByAccountIdMonthYearService.execute(
         accountId,
         month,
         year

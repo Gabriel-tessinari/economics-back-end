@@ -4,7 +4,7 @@
 @year = 2022
 
 ###
-DELETE {{url}}/634ed5f3f3f24deff24efc38
+DELETE {{url}}/62d76cde186102f1d80b87f9
 Content-Type: application/json
 
 ###
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
   "description": "Supermercado",
-  "value": 20.00,
+  "value": 255.00,
   "date": "25/07/2022",
   "type": "DEBIT",
   "accountId": "62d753d43e38ac07e76f0d87",
