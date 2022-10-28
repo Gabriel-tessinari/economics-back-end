@@ -23,7 +23,7 @@ export class PrismaTransactionRepo implements ITransactionRepo {
       });
     } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
     }
   }
 
@@ -36,7 +36,43 @@ export class PrismaTransactionRepo implements ITransactionRepo {
       });
     } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async findByAccountId(accountId: string): Promise<Transaction[]> {
+    let transactions: Transaction[] = [];
+
+    try {
+      const response = await prisma.transaction.findMany({
+        where: {
+          accountId: accountId,
+        },
+        orderBy: [{ date: "asc" }, { type: "asc" }],
+        include: {
+          account: true,
+          category: true,
+          subcategory: true,
+        },
+      });
+
+      if (response) {
+        response.forEach((transaction) => {
+          transactions.push(
+            PrismaToEntity.transaction(
+              transaction,
+              transaction.account,
+              transaction.category,
+              transaction.subcategory
+            )
+          );
+        });
+      }
+
+      return transactions;
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
     }
   }
 
@@ -76,7 +112,43 @@ export class PrismaTransactionRepo implements ITransactionRepo {
       return transactions;
     } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async findByCategoryId(categoryId: string): Promise<Transaction[]> {
+    let transactions: Transaction[] = [];
+
+    try {
+      const response = await prisma.transaction.findMany({
+        where: {
+          categoryId: categoryId,
+        },
+        orderBy: [{ date: "asc" }, { type: "asc" }],
+        include: {
+          account: true,
+          category: true,
+          subcategory: true,
+        },
+      });
+
+      if (response) {
+        response.forEach((transaction) => {
+          transactions.push(
+            PrismaToEntity.transaction(
+              transaction,
+              transaction.account,
+              transaction.category,
+              transaction.subcategory
+            )
+          );
+        });
+      }
+
+      return transactions;
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
     }
   }
 
@@ -105,7 +177,7 @@ export class PrismaTransactionRepo implements ITransactionRepo {
       return null;
     } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
     }
   }
 }

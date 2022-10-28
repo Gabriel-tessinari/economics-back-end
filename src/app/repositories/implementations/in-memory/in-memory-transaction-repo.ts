@@ -23,6 +23,18 @@ export class InMemoryTransactionRepo implements ITransactionRepo {
     this.transactions = response;
   }
 
+  async findByAccountId(accountId: string): Promise<Transaction[]> {
+    const response: Transaction[] = [];
+
+    this.transactions.map((item) => {
+      if (item.accountId == accountId) {
+        response.push(item);
+      }
+    });
+
+    return response;
+  }
+
   async findByAccountIdMonthYear(
     accountId: string,
     monthYear: string
@@ -31,6 +43,18 @@ export class InMemoryTransactionRepo implements ITransactionRepo {
 
     this.transactions.map((item) => {
       if (item.accountId == accountId && item.date.includes(monthYear)) {
+        response.push(item);
+      }
+    });
+
+    return response;
+  }
+
+  async findByCategoryId(categoryId: string): Promise<Transaction[]> {
+    const response: Transaction[] = [];
+
+    this.transactions.map((item) => {
+      if (item.categoryId == categoryId) {
         response.push(item);
       }
     });
