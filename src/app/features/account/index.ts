@@ -1,4 +1,5 @@
 import { PrismaAccountRepo } from "../../repositories/implementations/prisma/prisma-account-repo";
+import { findTransactionByAccountIdService } from "../transaction";
 import { CreateAccountController } from "./create/create-account.controller";
 import { CreateAccountService } from "./create/create-account.service";
 import { DeleteAccountByIdController } from "./delete/delete-account-by-id.controller";
@@ -13,7 +14,10 @@ const createAccountController = new CreateAccountController(
   createAccountService
 );
 
-const deleteAccountByIdService = new DeleteAccountByIdService(repo);
+const deleteAccountByIdService = new DeleteAccountByIdService(
+  repo,
+  findTransactionByAccountIdService
+);
 const deleteAccountByIdController = new DeleteAccountByIdController(
   deleteAccountByIdService
 );

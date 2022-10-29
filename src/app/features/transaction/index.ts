@@ -30,9 +30,8 @@ const findTransactionByAccountIdMonthYearController =
 const findTransactionByAccountIdService = new FindTransactionByAccountIdService(
   repo
 );
-const findTransactionByCategoryId = new FindTransactionByCategoryIdService(
-  repo
-);
+const findTransactionByCategoryIdService =
+  new FindTransactionByCategoryIdService(repo);
 
 export {
   createTransactionController,
@@ -42,5 +41,5 @@ export {
   findTransactionByAccountIdMonthYearController,
   findTransactionByAccountIdMonthYearService,
   findTransactionByAccountIdService,
-  findTransactionByCategoryId,
+  findTransactionByCategoryIdService,
 };
