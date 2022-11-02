@@ -1,56 +1,79 @@
-import { Account as AccountDB, Category, Subcategory, Transaction as TransactionDB } from "@prisma/client";
+import {
+  Account as AccountDB,
+  Category as CategoryDB,
+  Subcategory as SubcategoryDB,
+  Transaction as TransactionDB,
+} from "@prisma/client";
 import { Account } from "../../../../entities/account";
 import { TransactionType } from "../../../../entities/enums/transaction-type";
 import { Transaction } from "../../../../entities/transaction";
-import { TransactionCategory } from "../../../../entities/transaction-category";
-import { TransactionSubcategory } from "../../../../entities/transaction-subcategory";
+import { Category } from "../../../../entities/category";
+import { Subcategory } from "../../../../entities/subcategory";
 
 export class PrismaToEntity {
   static account(accountDB: AccountDB): Account {
     return new Account(
       {
         description: accountDB.description,
-        total: accountDB.total
+        total: accountDB.total,
       },
       accountDB.id
     );
   }
 
-  static category(categoryDB: Category): TransactionCategory {
-    return new TransactionCategory(
-      { description: categoryDB.description }, 
-      categoryDB.id
-    );
+  static category(categoryDB: CategoryDB): Category {
+    return new Category({ description: categoryDB.description }, categoryDB.id);
   }
 
-  static subcategory(subcategoryDB: Subcategory): TransactionSubcategory {
-    return new TransactionSubcategory(
-      { 
+  static subcategory(subcategoryDB: SubcategoryDB): Subcategory {
+    return new Subcategory(
+      {
         description: subcategoryDB.description,
-        categoryId: subcategoryDB.categoryId
+        categoryId: subcategoryDB.categoryId,
       },
       subcategoryDB.id
     );
   }
 
+  static transactionSimple(transactionDB: TransactionDB): Transaction {
+    let subcategoryId: string | undefined;
+
+    transactionDB.subcategoryId
+      ? (subcategoryId = transactionDB.subcategoryId)
+      : (subcategoryId = undefined);
+
+    return new Transaction(
+      {
+        description: transactionDB.description,
+        value: transactionDB.value,
+        date: transactionDB.date,
+        type: transactionDB.type as TransactionType,
+        accountId: transactionDB.accountId,
+        categoryId: transactionDB.categoryId,
+        subcategoryId: subcategoryId,
+      },
+      transactionDB.id
+    );
+  }
+
   static transaction(
-    transactionDB: TransactionDB, 
-    accountDB: AccountDB, 
-    categoryDB: Category, 
-    subcategoryDB?: Subcategory | null
+    transactionDB: TransactionDB,
+    accountDB: AccountDB,
+    categoryDB: CategoryDB,
+    subcategoryDB?: SubcategoryDB | null
   ): Transaction {
     let account = PrismaToEntity.account(accountDB);
     let category = PrismaToEntity.category(categoryDB);
-    let subcategory: TransactionSubcategory | undefined;
+    let subcategory: Subcategory | undefined;
     let subcategoryId: string | undefined;
-    
-    transactionDB.subcategoryId? 
-    subcategoryId = transactionDB.subcategoryId : 
-    subcategoryId = undefined;
-    
-    subcategoryDB?
-    subcategory = PrismaToEntity.subcategory(subcategoryDB) :
-    subcategory = undefined;
+
+    transactionDB.subcategoryId
+      ? (subcategoryId = transactionDB.subcategoryId)
+      : (subcategoryId = undefined);
+
+    subcategoryDB
+      ? (subcategory = PrismaToEntity.subcategory(subcategoryDB))
+      : (subcategory = undefined);
 
     return new Transaction(
       {
@@ -63,7 +86,7 @@ export class PrismaToEntity {
         subcategoryId: subcategoryId,
         account: account,
         category: category,
-        subcategory: subcategory
+        subcategory: subcategory,
       },
       transactionDB.id
     );

@@ -4,12 +4,14 @@ import { ApiError } from "../../../utils/api-error";
 import { ITransactionRepo } from "../../i-transaction-repo";
 import { PrismaToEntity } from "./mappers/prismaToEntity";
 
-const prisma = new PrismaClient;
+const prisma = new PrismaClient();
 
 export class PrismaTransactionRepo implements ITransactionRepo {
-  async create(transaction: Transaction): Promise<void> {
+  async create(transaction: Transaction): Promise<Transaction> {
+    let created: Transaction;
+
     try {
-      await prisma.transaction.create({
+      const response = await prisma.transaction.create({
         data: {
           id: transaction.id,
           description: transaction.description,
@@ -18,12 +20,19 @@ export class PrismaTransactionRepo implements ITransactionRepo {
           type: transaction.type,
           accountId: transaction.accountId,
           categoryId: transaction.categoryId,
-          subcategoryId: transaction.subcategoryId
-        }
+          subcategoryId: transaction.subcategoryId,
+        },
       });
-    } catch(err: any) {
+
+      if (response) {
+        created = PrismaToEntity.transactionSimple(response);
+        return created;
+      }
+
+      throw ApiError.businessLogicError("Erro ao adicionar transação.");
+    } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
     }
   }
 
@@ -31,38 +40,33 @@ export class PrismaTransactionRepo implements ITransactionRepo {
     try {
       await prisma.transaction.delete({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
     }
   }
 
-  async findByAccountIdAndDateMonthYear(accountId: string, monthYear: string): Promise<Transaction[]> {
+  async findByAccountId(accountId: string): Promise<Transaction[]> {
     let transactions: Transaction[] = [];
 
     try {
       const response = await prisma.transaction.findMany({
         where: {
           accountId: accountId,
-          date: { contains: monthYear }
         },
-        orderBy: [
-          { date: 'asc' },
-          { type: 'asc' }
-
-        ] ,
+        orderBy: [{ date: "asc" }, { type: "asc" }],
         include: {
           account: true,
           category: true,
-          subcategory: true
-        }
+          subcategory: true,
+        },
       });
 
-      if(response) {
-        response.forEach(transaction => {
+      if (response) {
+        response.forEach((transaction) => {
           transactions.push(
             PrismaToEntity.transaction(
               transaction,
@@ -75,9 +79,85 @@ export class PrismaTransactionRepo implements ITransactionRepo {
       }
 
       return transactions;
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async findByAccountIdMonthYear(
+    accountId: string,
+    monthYear: string
+  ): Promise<Transaction[]> {
+    let transactions: Transaction[] = [];
+
+    try {
+      const response = await prisma.transaction.findMany({
+        where: {
+          accountId: accountId,
+          date: { contains: monthYear },
+        },
+        orderBy: [{ date: "asc" }, { type: "asc" }],
+        include: {
+          account: true,
+          category: true,
+          subcategory: true,
+        },
+      });
+
+      if (response) {
+        response.forEach((transaction) => {
+          transactions.push(
+            PrismaToEntity.transaction(
+              transaction,
+              transaction.account,
+              transaction.category,
+              transaction.subcategory
+            )
+          );
+        });
+      }
+
+      return transactions;
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async findByCategoryId(categoryId: string): Promise<Transaction[]> {
+    let transactions: Transaction[] = [];
+
+    try {
+      const response = await prisma.transaction.findMany({
+        where: {
+          categoryId: categoryId,
+        },
+        orderBy: [{ date: "asc" }, { type: "asc" }],
+        include: {
+          account: true,
+          category: true,
+          subcategory: true,
+        },
+      });
+
+      if (response) {
+        response.forEach((transaction) => {
+          transactions.push(
+            PrismaToEntity.transaction(
+              transaction,
+              transaction.account,
+              transaction.category,
+              transaction.subcategory
+            )
+          );
+        });
+      }
+
+      return transactions;
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
     }
   }
 
@@ -85,28 +165,64 @@ export class PrismaTransactionRepo implements ITransactionRepo {
     try {
       const response = await prisma.transaction.findFirst({
         where: {
-          id: id
+          id: id,
         },
         include: {
           account: true,
           category: true,
-          subcategory: true
-        }
+          subcategory: true,
+        },
       });
 
-      if(response) {
+      if (response) {
         return PrismaToEntity.transaction(
           response,
           response.account,
           response.category,
           response.subcategory
-        )
+        );
       }
 
       return null;
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async findBySubcategoryId(subcategoryId: string): Promise<Transaction[]> {
+    let transactions: Transaction[] = [];
+
+    try {
+      const response = await prisma.transaction.findMany({
+        where: {
+          subcategoryId: subcategoryId,
+        },
+        orderBy: [{ date: "asc" }, { type: "asc" }],
+        include: {
+          account: true,
+          category: true,
+          subcategory: true,
+        },
+      });
+
+      if (response) {
+        response.forEach((transaction) => {
+          transactions.push(
+            PrismaToEntity.transaction(
+              transaction,
+              transaction.account,
+              transaction.category,
+              transaction.subcategory
+            )
+          );
+        });
+      }
+
+      return transactions;
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
     }
   }
 }

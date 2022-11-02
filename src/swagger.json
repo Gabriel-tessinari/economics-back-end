@@ -2,13 +2,17 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Economics",
-    "description": "API para cadastrar e documentar histórico de movimentações financeiras, para controle pessoal.",
+    "description": "API para cadastrar e documentar histórico de movimentações financeiras, para controle pessoal. \n\n[Repositório deste projeto](https://github.com/Gabriel-tessinari/economics-back-end)",
     "version": "1.0.0"
   },
   "servers": [
     {
       "url": "http://localhost:3000",
       "description": "Para teste local."
+    },
+    {
+      "url": "https://gtcm-economics.onrender.com",
+      "description": "Para chamadas em produção."
     }
   ],
   "paths": {
@@ -54,7 +58,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TransactionCategory"
+                    "$ref": "#/components/schemas/Category"
                   }
                 }
               }
@@ -70,7 +74,6 @@
       "get": {
         "summary": "Listar transações da conta no período informado",
         "description": "Lista todas as transações da conta no período informado",
-        "operationId": "getOrderById",
         "parameters": [
           {
             "name": "accountId",
@@ -116,6 +119,34 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Erro de acesso ao Banco de Dados."
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "delete": {
+        "summary": "Deletar transação com o id informado",
+        "description": "Deleta a transação com o id informado",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da transação a deletar",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Transactions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "500": {
             "description": "Erro de acesso ao Banco de Dados."
@@ -169,14 +200,14 @@
             "$ref": "#/components/schemas/Account"
           },
           "category": {
-            "$ref": "#/components/schemas/TransactionCategory"
+            "$ref": "#/components/schemas/Category"
           },
           "subcategory": {
-            "$ref": "#/components/schemas/TransactionSubcategory"
+            "$ref": "#/components/schemas/Subcategory"
           }
         }
       },
-      "TransactionCategory": {
+      "Category": {
         "type": "object",
         "properties": {
           "_id": {
@@ -187,7 +218,7 @@
           }
         }
       },
-      "TransactionSubcategory": {
+      "Subcategory": {
         "type": "object",
         "properties": {
           "_id": {

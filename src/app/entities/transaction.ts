@@ -1,8 +1,9 @@
-import { ObjectId } from 'bson';
-import { Account } from './account';
-import { TransactionType } from './enums/transaction-type';
-import { TransactionCategory } from './transaction-category';
-import { TransactionSubcategory } from './transaction-subcategory';
+import { ObjectId } from "bson";
+import { Account } from "./account";
+import { TransactionType } from "./enums/transaction-type";
+import { Category } from "./category";
+import { Subcategory } from "./subcategory";
+import { FakeDataGenerator } from "../utils/fake-data-generator";
 
 type Props = {
   description: string;
@@ -13,9 +14,9 @@ type Props = {
   categoryId: string;
   subcategoryId?: string;
   account?: Account;
-  category?: TransactionCategory;
-  subcategory?: TransactionSubcategory;
-}
+  category?: Category;
+  subcategory?: Subcategory;
+};
 
 export class Transaction {
   protected _id: string;
@@ -27,15 +28,15 @@ export class Transaction {
   public categoryId: string;
   public subcategoryId?: string;
   public account?: Account;
-  public category?: TransactionCategory;
-  public subcategory?: TransactionSubcategory;
+  public category?: Category;
+  public subcategory?: Subcategory;
 
   public get id() {
     return this._id;
   }
 
   public constructor(props: Props, id?: string) {
-    id? this._id = id : this._id = new ObjectId().toHexString();
+    id ? (this._id = id) : (this._id = new ObjectId().toHexString());
     this.description = props.description;
     this.value = props.value;
     this.date = props.date;
@@ -46,5 +47,18 @@ export class Transaction {
     this.account = props.account;
     this.category = props.category;
     this.subcategory = props.subcategory;
+  }
+
+  public static fake(): Transaction {
+    return new Transaction({
+      description: FakeDataGenerator.genString(),
+      date: FakeDataGenerator.genDateString(),
+      value: FakeDataGenerator.genNumber(2),
+      type: [TransactionType.CREDIT, TransactionType.DEBIT][
+        FakeDataGenerator.genListIndex(2)
+      ],
+      accountId: FakeDataGenerator.genString(),
+      categoryId: FakeDataGenerator.genString(),
+    });
   }
 }

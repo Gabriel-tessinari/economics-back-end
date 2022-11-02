@@ -4,7 +4,7 @@ import { ApiError } from "../../../utils/api-error";
 import { IAccountRepo } from "../../i-account-repo";
 import { PrismaToEntity } from "./mappers/prismaToEntity";
 
-const prisma = new PrismaClient;
+const prisma = new PrismaClient();
 
 export class PrismaAccountRepo implements IAccountRepo {
   async create(account: Account): Promise<void> {
@@ -13,12 +13,12 @@ export class PrismaAccountRepo implements IAccountRepo {
         data: {
           id: account.id,
           description: account.description,
-          total: account.total
-        }
+          total: account.total,
+        },
       });
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
     }
   }
 
@@ -26,12 +26,12 @@ export class PrismaAccountRepo implements IAccountRepo {
     try {
       await prisma.account.delete({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
     }
   }
 
@@ -40,19 +40,19 @@ export class PrismaAccountRepo implements IAccountRepo {
 
     try {
       const response = await prisma.account.findMany({
-        orderBy: { description: "asc" }
+        orderBy: { description: "asc" },
       });
 
-      if(response) {
-        response.forEach(account => {
+      if (response) {
+        response.forEach((account) => {
           accounts.push(PrismaToEntity.account(account));
         });
       }
 
       return accounts;
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
     }
   }
 
@@ -60,15 +60,31 @@ export class PrismaAccountRepo implements IAccountRepo {
     try {
       const response = await prisma.account.findFirst({
         where: {
-          description: description
-        }
+          description: description,
+        },
       });
 
-      if(response) return PrismaToEntity.account(response);
+      if (response) return PrismaToEntity.account(response);
       else return null;
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
-      throw new ApiError(500, "Erro de acesso ao Banco de Dados.");
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async findById(id: string): Promise<Account | null> {
+    try {
+      const response = await prisma.account.findFirst({
+        where: {
+          id: id,
+        },
+      });
+
+      if (response) return PrismaToEntity.account(response);
+      else return null;
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
     }
   }
 }

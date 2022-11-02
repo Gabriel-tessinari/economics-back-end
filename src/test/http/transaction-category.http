@@ -1,5 +1,0 @@
-@url = http://localhost:3000/category
-
-###
-GET {{url}}
-Content-Type: application/json
