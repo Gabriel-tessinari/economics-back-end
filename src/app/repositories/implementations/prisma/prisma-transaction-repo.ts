@@ -22,10 +22,20 @@ export class PrismaTransactionRepo implements ITransactionRepo {
           categoryId: transaction.categoryId,
           subcategoryId: transaction.subcategoryId,
         },
+        include: {
+          account: true,
+          category: true,
+          subcategory: true,
+        },
       });
 
       if (response) {
-        created = PrismaToEntity.transactionSimple(response);
+        created = PrismaToEntity.transaction(
+          response,
+          response.account,
+          response.category,
+          response.subcategory
+        );
         return created;
       }
 

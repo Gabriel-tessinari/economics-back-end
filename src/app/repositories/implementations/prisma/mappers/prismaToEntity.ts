@@ -35,27 +35,6 @@ export class PrismaToEntity {
     );
   }
 
-  static transactionSimple(transactionDB: TransactionDB): Transaction {
-    let subcategoryId: string | undefined;
-
-    transactionDB.subcategoryId
-      ? (subcategoryId = transactionDB.subcategoryId)
-      : (subcategoryId = undefined);
-
-    return new Transaction(
-      {
-        description: transactionDB.description,
-        value: transactionDB.value,
-        date: transactionDB.date,
-        type: transactionDB.type as TransactionType,
-        accountId: transactionDB.accountId,
-        categoryId: transactionDB.categoryId,
-        subcategoryId: subcategoryId,
-      },
-      transactionDB.id
-    );
-  }
-
   static transaction(
     transactionDB: TransactionDB,
     accountDB: AccountDB,

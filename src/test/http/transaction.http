@@ -15,7 +15,7 @@ POST {{url}}
 Content-Type: application/json
 
 {
-  "description": "Teste com retorno",
+  "description": "Teste com retorno completo",
   "value": 255.00,
   "date": "25/07/2022",
   "type": "DEBIT",
