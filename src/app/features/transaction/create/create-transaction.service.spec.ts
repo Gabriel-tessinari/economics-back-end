@@ -27,7 +27,7 @@ describe("Create transaction", () => {
     expect(
       (await repo.findByAccountIdMonthYear(accountId, monthYear)).length
     ).toBe(0);
-    expect(await service.execute(transaction)).toBeUndefined();
+    expect(await service.execute(transaction)).toHaveProperty("_id");
     expect(
       (await repo.findByAccountIdMonthYear(accountId, monthYear)).length
     ).toBe(1);

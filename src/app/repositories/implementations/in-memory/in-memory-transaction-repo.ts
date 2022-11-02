@@ -9,10 +9,10 @@ export class InMemoryTransactionRepo implements ITransactionRepo {
     this.transactions = [];
   }
 
-  async create(transaction: Transaction): Promise<void> {
-    const req: Transaction = new Transaction(transaction, uuidv4());
-
-    this.transactions.push(req);
+  async create(transaction: Transaction): Promise<Transaction> {
+    const response: Transaction = new Transaction(transaction, uuidv4());
+    this.transactions.push(response);
+    return response;
   }
 
   async deleteById(id: string): Promise<void> {

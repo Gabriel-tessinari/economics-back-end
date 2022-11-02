@@ -9,8 +9,8 @@ export class CreateTransactionController {
     const transaction = new Transaction(req.body);
 
     try {
-      await this.service.execute(transaction);
-      return res.status(201).send("Transação adicionada com sucesso.");
+      const response = await this.service.execute(transaction);
+      return res.status(201).send(response);
     } catch (err: any) {
       return res.status(err.status).send(err.message);
     }

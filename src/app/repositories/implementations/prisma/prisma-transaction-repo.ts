@@ -7,9 +7,11 @@ import { PrismaToEntity } from "./mappers/prismaToEntity";
 const prisma = new PrismaClient();
 
 export class PrismaTransactionRepo implements ITransactionRepo {
-  async create(transaction: Transaction): Promise<void> {
+  async create(transaction: Transaction): Promise<Transaction> {
+    let created: Transaction;
+
     try {
-      await prisma.transaction.create({
+      const response = await prisma.transaction.create({
         data: {
           id: transaction.id,
           description: transaction.description,
@@ -21,6 +23,13 @@ export class PrismaTransactionRepo implements ITransactionRepo {
           subcategoryId: transaction.subcategoryId,
         },
       });
+
+      if (response) {
+        created = PrismaToEntity.transactionSimple(response);
+        return created;
+      }
+
+      throw ApiError.businessLogicError("Erro ao adicionar transação.");
     } catch (err: any) {
       console.log(err);
       throw ApiError.errorToAccessDB();

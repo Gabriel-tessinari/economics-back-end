@@ -1,7 +1,7 @@
 import { Transaction } from "../entities/transaction";
 
 export interface ITransactionRepo {
-  create(transaction: Transaction): Promise<void>;
+  create(transaction: Transaction): Promise<Transaction>;
   deleteById(id: string): Promise<void>;
   findByAccountId(accountId: string): Promise<Transaction[]>;
   findByAccountIdMonthYear(
