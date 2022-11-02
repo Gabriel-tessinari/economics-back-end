@@ -10,4 +10,5 @@ export interface ITransactionRepo {
   ): Promise<Transaction[]>;
   findByCategoryId(categoryId: string): Promise<Transaction[]>;
   findById(id: string): Promise<Transaction | null>;
+  findBySubcategoryId(subcategoryId: string): Promise<Transaction[]>;
 }

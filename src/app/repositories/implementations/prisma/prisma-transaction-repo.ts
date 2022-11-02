@@ -189,4 +189,40 @@ export class PrismaTransactionRepo implements ITransactionRepo {
       throw ApiError.errorToAccessDB();
     }
   }
+
+  async findBySubcategoryId(subcategoryId: string): Promise<Transaction[]> {
+    let transactions: Transaction[] = [];
+
+    try {
+      const response = await prisma.transaction.findMany({
+        where: {
+          subcategoryId: subcategoryId,
+        },
+        orderBy: [{ date: "asc" }, { type: "asc" }],
+        include: {
+          account: true,
+          category: true,
+          subcategory: true,
+        },
+      });
+
+      if (response) {
+        response.forEach((transaction) => {
+          transactions.push(
+            PrismaToEntity.transaction(
+              transaction,
+              transaction.account,
+              transaction.category,
+              transaction.subcategory
+            )
+          );
+        });
+      }
+
+      return transactions;
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
+    }
+  }
 }
