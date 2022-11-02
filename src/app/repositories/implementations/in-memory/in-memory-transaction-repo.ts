@@ -70,4 +70,16 @@ export class InMemoryTransactionRepo implements ITransactionRepo {
     if (transaction) return transaction;
     return null;
   }
+
+  async findBySubcategoryId(subcategoryId: string): Promise<Transaction[]> {
+    const response: Transaction[] = [];
+
+    this.transactions.map((item) => {
+      if (item.subcategoryId == subcategoryId) {
+        response.push(item);
+      }
+    });
+
+    return response;
+  }
 }
