@@ -1,0 +1,17 @@
+@url = http://localhost:3000/category
+
+###
+GET {{url}}
+Content-Type: application/json
+
+###
+POST {{url}}
+Content-Type: application/json
+
+{
+  "description": "SAÚDE"
+}
+
+###
+DELETE {{url}}/6359f2be43e194830e380801
+Content-Type: application/json

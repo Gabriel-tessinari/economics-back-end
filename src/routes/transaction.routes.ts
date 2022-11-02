@@ -1,22 +1,25 @@
 import { Router } from "express";
-import { 
-  createTransactionController, 
-  deleteTransactionByIdController, 
-  findByAccountIdAndDateMonthYearController 
-} from "../app/useCases/transaction";
+import {
+  createTransactionController,
+  deleteTransactionByIdController,
+  findTransactionByAccountIdMonthYearController,
+} from "../app/features/transaction";
 
 const transactionRouter = Router();
 
-transactionRouter.post('/', (req, res) => {
+transactionRouter.post("/", (req, res) => {
   return createTransactionController.execute(req, res);
 });
 
-transactionRouter.delete('/:id', (req, res) => {
+transactionRouter.delete("/:id", (req, res) => {
   return deleteTransactionByIdController.execute(req, res);
 });
 
-transactionRouter.get('/account/:accountId/month/:month/year/:year', (req, res) => {
-  return findByAccountIdAndDateMonthYearController.execute(req, res);
-});
+transactionRouter.get(
+  "/account/:accountId/month/:month/year/:year",
+  (req, res) => {
+    return findTransactionByAccountIdMonthYearController.execute(req, res);
+  }
+);
 
-export { transactionRouter }
+export { transactionRouter };

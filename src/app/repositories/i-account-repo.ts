@@ -5,4 +5,5 @@ export interface IAccountRepo {
   deleteById(id: string): Promise<void>;
   findAll(): Promise<Account[]>;
   findByDescription(description: string): Promise<Account | null>;
+  findById(id: string): Promise<Account | null>;
 }
