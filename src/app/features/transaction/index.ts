@@ -7,6 +7,7 @@ import { FindTransactionByAccountIdMonthYearController } from "./find/find-trans
 import { FindTransactionByAccountIdMonthYearService } from "./find/find-transaction-by-accountid-month-year.service";
 import { FindTransactionByAccountIdService } from "./find/find-transaction-by-accountid.service";
 import { FindTransactionByCategoryIdService } from "./find/find-transaction-by-categoryid.service";
+import { FindTransactionBySubcategoryIdService } from "./find/find-transaction-by-subcategoryid.service";
 
 const repo = new PrismaTransactionRepo();
 
@@ -32,6 +33,8 @@ const findTransactionByAccountIdService = new FindTransactionByAccountIdService(
 );
 const findTransactionByCategoryIdService =
   new FindTransactionByCategoryIdService(repo);
+const findTransactionBySubcategoryIdService =
+  new FindTransactionBySubcategoryIdService(repo);
 
 export {
   createTransactionController,
@@ -42,4 +45,5 @@ export {
   findTransactionByAccountIdMonthYearService,
   findTransactionByAccountIdService,
   findTransactionByCategoryIdService,
+  findTransactionBySubcategoryIdService,
 };

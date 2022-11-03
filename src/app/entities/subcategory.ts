@@ -1,12 +1,16 @@
+import { Category } from "./category";
+
 type Props = {
   description: string;
   categoryId: string;
-}
+  category?: Category;
+};
 
 export class Subcategory {
   protected _id?: string;
   public description: string;
   public categoryId: string;
+  public category?: Category;
 
   public get id() {
     return this._id;
@@ -16,5 +20,10 @@ export class Subcategory {
     this._id = id;
     this.description = props.description;
     this.categoryId = props.categoryId;
+    this.category = props.category;
+  }
+
+  public toLowerCase() {
+    this.description = this.description.toLowerCase();
   }
 }

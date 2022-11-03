@@ -25,11 +25,20 @@ export class PrismaToEntity {
     return new Category({ description: categoryDB.description }, categoryDB.id);
   }
 
-  static subcategory(subcategoryDB: SubcategoryDB): Subcategory {
+  static subcategory(
+    subcategoryDB: SubcategoryDB,
+    categoryDB?: CategoryDB
+  ): Subcategory {
+    let category = undefined;
+    categoryDB
+      ? (category = PrismaToEntity.category(categoryDB))
+      : (category = undefined);
+
     return new Subcategory(
       {
         description: subcategoryDB.description,
         categoryId: subcategoryDB.categoryId,
+        category: category,
       },
       subcategoryDB.id
     );
