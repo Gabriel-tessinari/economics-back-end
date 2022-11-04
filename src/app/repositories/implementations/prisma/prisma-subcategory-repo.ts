@@ -61,6 +61,35 @@ export class PrismaSubcategoryRepo implements ISubcategoryRepo {
     }
   }
 
+  async findByCategoryId(categoryId: string): Promise<Subcategory[]> {
+    let subcategories: Subcategory[] = [];
+
+    try {
+      const response = await prisma.subcategory.findMany({
+        where: {
+          categoryId: categoryId,
+        },
+        orderBy: { description: "asc" },
+        include: {
+          category: true,
+        },
+      });
+
+      if (response) {
+        response.forEach((subcategory) => {
+          subcategories.push(
+            PrismaToEntity.subcategory(subcategory, subcategory.category)
+          );
+        });
+      }
+
+      return subcategories;
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
   async findByDescription(description: string): Promise<Subcategory | null> {
     try {
       const response = await prisma.subcategory.findFirst({

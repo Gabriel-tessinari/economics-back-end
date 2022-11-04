@@ -34,6 +34,18 @@ export class InMemorySubcategoryRepo implements ISubcategoryRepo {
     return this.subcategories;
   }
 
+  async findByCategoryId(categoryId: string): Promise<Subcategory[]> {
+    const response: Subcategory[] = [];
+
+    this.subcategories.map((item) => {
+      if (item.categoryId == categoryId) {
+        response.push(item);
+      }
+    });
+
+    return response;
+  }
+
   async findByDescription(description: string): Promise<Subcategory | null> {
     const subcategory = this.subcategories.find((item) => {
       return item.description == description;

@@ -6,6 +6,7 @@ import { DeleteSubcategoryByIdController } from "./delete/delete-subcategory-by-
 import { DeleteSubcategoryByIdService } from "./delete/delete-subcategory-by-id.service";
 import { FindAllSubcategoryController } from "./find/find-all-subcategory.controller";
 import { FindAllSubcategoryService } from "./find/find-all-subcategory.service";
+import { FindSubcategoryByCategoryIdService } from "./find/find-subcategory-by-categoryid.service";
 
 const repo = new PrismaSubcategoryRepo();
 
@@ -27,6 +28,9 @@ const findAllSubcategoryController = new FindAllSubcategoryController(
   findAllSubcategoryService
 );
 
+const findSubcategoryByCategoryIdService =
+  new FindSubcategoryByCategoryIdService(repo);
+
 export {
   createSubcategoryController,
   createSubcategoryService,
@@ -34,4 +38,5 @@ export {
   deleteSubcategoryByIdService,
   findAllSubcategoryController,
   findAllSubcategoryService,
+  findSubcategoryByCategoryIdService,
 };
