@@ -1,3 +1,4 @@
+import { FakeDataGenerator } from "../utils/fake-data-generator";
 import { Category } from "./category";
 
 type Props = {
@@ -25,5 +26,12 @@ export class Subcategory {
 
   public toLowerCase() {
     this.description = this.description.toLowerCase();
+  }
+
+  public static fake(): Subcategory {
+    return new Subcategory({
+      description: FakeDataGenerator.genString(),
+      categoryId: FakeDataGenerator.genString(),
+    });
   }
 }

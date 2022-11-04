@@ -1,4 +1,5 @@
 import { PrismaCategoryRepo } from "../../repositories/implementations/prisma/prisma-category-repo";
+import { findSubcategoryByCategoryIdService } from "../subcategory";
 import { findTransactionByCategoryIdService } from "../transaction";
 import { CreateCategoryController } from "./create/create-category.controller";
 import { CreateCategoryService } from "./create/create-category.service";
@@ -16,7 +17,8 @@ const createCategoryController = new CreateCategoryController(
 
 const deleteCategoryByIdService = new DeleteCategoryByIdService(
   repo,
-  findTransactionByCategoryIdService
+  findTransactionByCategoryIdService,
+  findSubcategoryByCategoryIdService
 );
 const deleteCategoryByIdController = new DeleteCategoryByIdController(
   deleteCategoryByIdService
