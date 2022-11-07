@@ -2,11 +2,9 @@ import { DeleteCategoryByIdService } from "./delete-category-by-id.service";
 import { Category } from "../../../entities/category";
 import { Transaction } from "../../../entities/transaction";
 import { InMemoryCategoryRepo } from "../../../repositories/implementations/in-memory/in-memory-category-repo";
-import { InMemorySubcategoryRepo } from "../../../repositories/implementations/in-memory/in-memory-subcategory-repo";
 import { InMemoryTransactionRepo } from "../../../repositories/implementations/in-memory/in-memory-transaction-repo";
 import { FindTransactionByCategoryIdService } from "../../transaction/find/find-transaction-by-categoryid.service";
 import { ApiError } from "../../../utils/api-error";
-import { FindSubcategoryByCategoryIdService } from "../../subcategory/find/find-subcategory-by-categoryid.service";
 import { Subcategory } from "../../../entities/subcategory";
 
 describe("Delete category by id", () => {
@@ -14,8 +12,6 @@ describe("Delete category by id", () => {
   let service: DeleteCategoryByIdService;
   let transactionRepo: InMemoryTransactionRepo;
   let transactionService: FindTransactionByCategoryIdService;
-  let subcategoryRepo: InMemorySubcategoryRepo;
-  let subcategoryService: FindSubcategoryByCategoryIdService;
   let id: string | undefined;
 
   beforeAll(() => {
@@ -24,15 +20,7 @@ describe("Delete category by id", () => {
     transactionService = new FindTransactionByCategoryIdService(
       transactionRepo
     );
-    subcategoryRepo = new InMemorySubcategoryRepo();
-    subcategoryService = new FindSubcategoryByCategoryIdService(
-      subcategoryRepo
-    );
-    service = new DeleteCategoryByIdService(
-      repo,
-      transactionService,
-      subcategoryService
-    );
+    service = new DeleteCategoryByIdService(repo, transactionService);
   });
 
   beforeEach(async () => {
@@ -45,24 +33,20 @@ describe("Delete category by id", () => {
     });
 
     await repo.create(category1);
-    await repo.create(category2);
-
-    id = (await repo.findAll())[1].id;
+    id = (await repo.create(category2)).id;
   });
 
   afterEach(() => {
     repo.setCategoriesEmpty();
     transactionRepo.setTransactionsEmpty();
-    subcategoryRepo.setSubcategoriesEmpty();
   });
 
   it("should be able to delete a category", async () => {
-    const spy = jest.spyOn(repo, "findById");
-    const spy2 = jest.spyOn(transactionService, "execute");
-    const spy3 = jest.spyOn(subcategoryService, "execute");
+    const spy = jest.spyOn(repo, "existsById");
+    const spy2 = jest.spyOn(repo, "hasSubcategory");
+    const spy3 = jest.spyOn(transactionService, "execute");
 
     if (id) {
-      expect((await repo.findAll()).length).toBe(2);
       expect(await service.execute(id)).toBeUndefined();
       expect(spy).toBeCalledTimes(1);
       expect(spy2).toBeCalledTimes(1);
@@ -80,11 +64,10 @@ describe("Delete category by id", () => {
 
   it("should return undefined when do not find by id", async () => {
     const spy = jest.spyOn(repo, "deleteById");
-    const spy2 = jest.spyOn(transactionService, "execute");
-    const spy3 = jest.spyOn(subcategoryService, "execute");
+    const spy2 = jest.spyOn(repo, "hasSubcategory");
+    const spy3 = jest.spyOn(transactionService, "execute");
     const id = "notAnIdInTheList";
 
-    expect((await repo.findAll()).length).toBe(2);
     expect(await service.execute(id)).toBeUndefined();
     expect(spy).not.toBeCalled();
     expect(spy2).toBeCalledTimes(1);
@@ -116,12 +99,18 @@ describe("Delete category by id", () => {
 
   it("should throw error if exists subcategory of the category", async () => {
     let subcategory = Subcategory.fake();
-    if (id) {
-      subcategory.categoryId = id;
-      subcategoryRepo.create(subcategory);
+    let subcategories = [subcategory];
 
+    const categoryWithSubcategory = new Category({
+      description: "withSubcategory",
+      subcategories: subcategories,
+    });
+
+    const createdWithSubcategory = await repo.create(categoryWithSubcategory);
+
+    if (createdWithSubcategory.id) {
       try {
-        await service.execute(id);
+        await service.execute(createdWithSubcategory.id);
         throw ApiError.testError();
       } catch (err: any) {
         expect(err.status).toBe(422);

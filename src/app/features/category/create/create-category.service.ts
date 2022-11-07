@@ -13,7 +13,7 @@ export class CreateCategoryService {
       subcategories: [],
     });
 
-    const exists = await this.repo.findByDescription(req.description);
+    const exists = await this.repo.existsByDescription(req.description);
 
     if (!exists) response = await this.repo.create(req);
     else throw ApiError.businessLogicError("Categoria já existente.");

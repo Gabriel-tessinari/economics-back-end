@@ -46,6 +46,32 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     }
   }
 
+  async existsByDescription(description: string): Promise<boolean> {
+    try {
+      return !!(await prisma.category.findFirst({
+        where: {
+          description: description,
+        },
+      }));
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
+  async existsById(id: string): Promise<boolean> {
+    try {
+      return !!(await prisma.category.findFirst({
+        where: {
+          id: id,
+        },
+      }));
+    } catch (err: any) {
+      console.log(err);
+      throw ApiError.errorToAccessDB();
+    }
+  }
+
   async findAll(): Promise<Category[]> {
     let categories: Category[] = [];
 
@@ -72,32 +98,19 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     }
   }
 
-  async findByDescription(description: string): Promise<Category | null> {
-    try {
-      const response = await prisma.category.findFirst({
-        where: {
-          description: description,
-        },
-      });
-
-      if (response) return PrismaToEntity.category(response);
-      return null;
-    } catch (err: any) {
-      console.log(err);
-      throw ApiError.errorToAccessDB();
-    }
-  }
-
-  async findById(id: string): Promise<Category | null> {
+  async hasSubcategory(id: string): Promise<boolean> {
     try {
       const response = await prisma.category.findFirst({
         where: {
           id: id,
         },
+        include: {
+          subcategories: true,
+        },
       });
 
-      if (response) return PrismaToEntity.category(response);
-      return null;
+      if (response) return response.subcategories.length > 0;
+      return false;
     } catch (err: any) {
       console.log(err);
       throw ApiError.errorToAccessDB();

@@ -32,25 +32,28 @@ export class InMemoryCategoryRepo implements ICategoryRepo {
     this.categories = response;
   }
 
+  async existsByDescription(description: string): Promise<boolean> {
+    return !!this.categories.find((item) => {
+      return item.description == description;
+    });
+  }
+
+  async existsById(id: string): Promise<boolean> {
+    return !!this.categories.find((item) => {
+      return item.id == id;
+    });
+  }
+
   async findAll(): Promise<Category[]> {
     return this.categories;
   }
 
-  async findByDescription(description: string): Promise<Category | null> {
-    const category = this.categories.find((item) => {
-      return item.description == description;
-    });
-
-    if (category) return category;
-    return null;
-  }
-
-  async findById(id: string): Promise<Category | null> {
+  async hasSubcategory(id: string): Promise<boolean> {
     const category = this.categories.find((item) => {
       return item.id == id;
     });
 
-    if (category) return category;
-    return null;
+    if (category) return category.subcategories.length > 0;
+    return false;
   }
 }
