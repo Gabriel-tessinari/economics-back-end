@@ -38,10 +38,12 @@ describe("Delete category by id", () => {
   beforeEach(async () => {
     const category1 = new Category({
       description: "toStay",
+      subcategories: [],
     });
 
     const category2 = new Category({
       description: "toDelete",
+      subcategories: [],
     });
 
     await repo.create(category1);

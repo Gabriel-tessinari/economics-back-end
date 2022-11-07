@@ -14,6 +14,7 @@ describe("Find all categories", () => {
   beforeEach(async () => {
     const category = new Category({
       description: "Test",
+      subcategories: [],
     });
 
     await repo.create(category);
@@ -26,6 +27,7 @@ describe("Find all categories", () => {
   it("should be able to find 1 and after post find 2", async () => {
     const category = new Category({
       description: "Test2",
+      subcategories: [],
     });
 
     expect((await service.execute()).length).toBe(1);
