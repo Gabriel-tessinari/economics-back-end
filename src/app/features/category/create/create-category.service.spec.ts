@@ -8,7 +8,6 @@ describe("Create category", () => {
   let service: CreateCategoryService;
   let reference: Category = new Category({
     description: "Test",
-    subcategories: [],
   });
 
   beforeAll(() => {
@@ -23,7 +22,6 @@ describe("Create category", () => {
   it("should be able to create a category", async () => {
     const category = new Category({
       description: reference.description,
-      subcategories: [],
     });
 
     const response = await service.execute(category);
@@ -37,7 +35,6 @@ describe("Create category", () => {
   it("should not be able to create category with same description", async () => {
     const category = new Category({
       description: reference.description.toLowerCase(),
-      subcategories: [],
     });
 
     await repo.create(category);

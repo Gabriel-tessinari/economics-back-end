@@ -52,11 +52,16 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     try {
       const response = await prisma.category.findMany({
         orderBy: { description: "asc" },
+        include: {
+          subcategories: true,
+        },
       });
 
       if (response) {
         response.forEach((category) => {
-          categories.push(PrismaToEntity.category(category));
+          categories.push(
+            PrismaToEntity.category(category, category.subcategories)
+          );
         });
       }
 

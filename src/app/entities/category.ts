@@ -2,7 +2,7 @@ import { Subcategory } from "./subcategory";
 
 type Props = {
   description: string;
-  subcategories: Subcategory[];
+  subcategories?: Subcategory[];
 };
 
 export class Category {
@@ -17,7 +17,10 @@ export class Category {
   public constructor(props: Props, id?: string) {
     this._id = id;
     this.description = props.description;
-    this.subcategories = props.subcategories;
+
+    props.subcategories
+      ? (this.subcategories = props.subcategories)
+      : (this.subcategories = []);
   }
 
   public toLowerCase() {
