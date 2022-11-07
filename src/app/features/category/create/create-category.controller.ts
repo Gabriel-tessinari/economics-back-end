@@ -9,8 +9,8 @@ export class CreateCategoryController {
     const category = new Category(req.body);
 
     try {
-      await this.service.execute(category);
-      return res.status(201).send("Categoria adicionada com sucesso.");
+      const response = await this.service.execute(category);
+      return res.status(201).send(response);
     } catch (err: any) {
       return res.status(err.status).send(err.message);
     }

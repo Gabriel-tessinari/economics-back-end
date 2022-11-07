@@ -21,8 +21,22 @@ export class PrismaToEntity {
     );
   }
 
-  static category(categoryDB: CategoryDB): Category {
-    return new Category({ description: categoryDB.description }, categoryDB.id);
+  static category(
+    categoryDB: CategoryDB,
+    subcategoriesDB?: SubcategoryDB[]
+  ): Category {
+    let subcategories: Subcategory[] = [];
+
+    subcategoriesDB
+      ? subcategoriesDB.forEach((item) => {
+          subcategories.push(PrismaToEntity.subcategory(item));
+        })
+      : (subcategories = []);
+
+    return new Category(
+      { description: categoryDB.description, subcategories: subcategories },
+      categoryDB.id
+    );
   }
 
   static subcategory(

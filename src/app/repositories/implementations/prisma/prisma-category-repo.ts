@@ -4,18 +4,30 @@ import { ApiError } from "../../../utils/api-error";
 import { ICategoryRepo } from "../../i-category-repo";
 import { PrismaToEntity } from "./mappers/prismaToEntity";
 
-const prisma = new PrismaClient;
+const prisma = new PrismaClient();
 
 export class PrismaCategoryRepo implements ICategoryRepo {
-  async create(category: Category): Promise<void> {
+  async create(category: Category): Promise<Category> {
+    let created: Category;
+
     try {
-      await prisma.category.create({
+      const response = await prisma.category.create({
         data: {
           id: category.id,
-          description: category.description
-        }
+          description: category.description,
+        },
+        include: {
+          subcategories: true,
+        },
       });
-    } catch(err: any) {
+
+      if (response) {
+        created = PrismaToEntity.category(response, response.subcategories);
+        return created;
+      }
+
+      throw ApiError.businessLogicError("Erro ao adicionar categoria.");
+    } catch (err: any) {
       console.log(err);
       throw ApiError.errorToAccessDB();
     }
@@ -25,31 +37,31 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     try {
       await prisma.category.delete({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
       throw ApiError.errorToAccessDB();
     }
   }
-  
+
   async findAll(): Promise<Category[]> {
     let categories: Category[] = [];
 
     try {
       const response = await prisma.category.findMany({
-        orderBy: { description: "asc" }
+        orderBy: { description: "asc" },
       });
 
-      if(response) {
-        response.forEach(category => {
+      if (response) {
+        response.forEach((category) => {
           categories.push(PrismaToEntity.category(category));
         });
       }
 
       return categories;
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
       throw ApiError.errorToAccessDB();
     }
@@ -59,13 +71,13 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     try {
       const response = await prisma.category.findFirst({
         where: {
-          description: description
-        }
+          description: description,
+        },
       });
 
-      if(response) return PrismaToEntity.category(response);
+      if (response) return PrismaToEntity.category(response);
       return null;
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
       throw ApiError.errorToAccessDB();
     }
@@ -75,13 +87,13 @@ export class PrismaCategoryRepo implements ICategoryRepo {
     try {
       const response = await prisma.category.findFirst({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
 
-      if(response) return PrismaToEntity.category(response);
+      if (response) return PrismaToEntity.category(response);
       return null;
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
       throw ApiError.errorToAccessDB();
     }

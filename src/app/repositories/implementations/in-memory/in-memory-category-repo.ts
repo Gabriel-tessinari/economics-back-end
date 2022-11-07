@@ -10,20 +10,22 @@ export class InMemoryCategoryRepo implements ICategoryRepo {
     this.categories = [];
   }
 
-  async create(category: Category): Promise<void> {
+  async create(category: Category): Promise<Category> {
     const req: Category = new Category(category, uuidv4());
 
-    const exists = this.categories.find(item => {
+    const exists = this.categories.find((item) => {
       return item.description == category.description;
     });
 
-    if(exists) throw ApiError.errorToAccessDB();
+    if (exists) throw ApiError.errorToAccessDB();
 
     this.categories.push(req);
+
+    return req;
   }
 
   async deleteById(id: string): Promise<void> {
-    const response = this.categories.filter(item => {
+    const response = this.categories.filter((item) => {
       return item.id != id;
     });
 
@@ -35,20 +37,20 @@ export class InMemoryCategoryRepo implements ICategoryRepo {
   }
 
   async findByDescription(description: string): Promise<Category | null> {
-    const category = this.categories.find(item => {
+    const category = this.categories.find((item) => {
       return item.description == description;
     });
 
-    if(category) return category;
+    if (category) return category;
     return null;
   }
 
   async findById(id: string): Promise<Category | null> {
-    const category = this.categories.find(item => {
+    const category = this.categories.find((item) => {
       return item.id == id;
     });
 
-    if(category) return category;
+    if (category) return category;
     return null;
   }
 }

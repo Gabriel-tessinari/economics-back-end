@@ -8,6 +8,7 @@ describe("Create category", () => {
   let service: CreateCategoryService;
   let reference: Category = new Category({
     description: "Test",
+    subcategories: [],
   });
 
   beforeAll(() => {
@@ -22,22 +23,21 @@ describe("Create category", () => {
   it("should be able to create a category", async () => {
     const category = new Category({
       description: reference.description,
+      subcategories: [],
     });
 
-    expect((await repo.findAll()).length).toBe(0);
-    expect(await service.execute(category)).toBeUndefined();
+    const response = await service.execute(category);
 
-    let response = await repo.findAll();
-
-    expect(response.length).toBe(1);
-    expect(response[0]).toHaveProperty("_id");
-    expect(response[0].description).not.toBe(reference.description);
-    expect(response[0].description).toBe(reference.description.toLowerCase());
+    expect(response).toHaveProperty("_id");
+    expect(response.description).not.toBe(reference.description);
+    expect(response.description).toBe(reference.description.toLowerCase());
+    expect((await repo.findAll()).length).toBe(1);
   });
 
   it("should not be able to create category with same description", async () => {
     const category = new Category({
       description: reference.description.toLowerCase(),
+      subcategories: [],
     });
 
     await repo.create(category);
