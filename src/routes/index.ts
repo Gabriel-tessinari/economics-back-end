@@ -1,16 +1,8 @@
 import { Router } from "express";
-import { accountRouter } from "./account.routes";
-import { reportRouter } from "./report.routes";
-import { categoryRouter } from "./category.routes";
-import { transactionRouter } from "./transaction.routes";
-import { subcategoryRouter } from "./subcategory.routes";
+import { userRouter } from "./user.routes";
 
 const routes = Router();
 
-routes.use("/account", accountRouter);
-routes.use("/category", categoryRouter);
-routes.use("/report", reportRouter);
-routes.use("/subcategory", subcategoryRouter);
-routes.use("/transaction", transactionRouter);
+routes.use('/user', userRouter);
 
-export { routes };
+export default routes;

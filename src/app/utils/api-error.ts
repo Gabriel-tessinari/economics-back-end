@@ -17,4 +17,8 @@ export class ApiError extends Error {
   static testError(): ApiError {
     return new ApiError(400, 'Falha no teste');
   }
+
+  static unauthorized(): ApiError {
+    return new ApiError(401, 'Não autorizado.');
+  }
 }

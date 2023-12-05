@@ -1,9 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { routes } from "./routes";
+import routes from "./routes";
 import dotenv from "dotenv";
-import swaggerUi from "swagger-ui-express";
-import swaggerDocs from "./swagger.json";
 
 const options: cors.CorsOptions = {
   allowedHeaders: [
@@ -25,7 +23,6 @@ const app = express();
 
 app.use(cors(options));
 app.use(express.json());
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(routes);
 
 app.listen(PORT, () => console.log("Servidor iniciado na porta " + PORT));
