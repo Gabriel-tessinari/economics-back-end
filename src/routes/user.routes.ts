@@ -8,8 +8,4 @@ router.post('/login', (req: Request, res: Response) => {
   return UserController.login(req.body, res);
 });
 
-router.get('/', tokenUtils.verifyToken, (req: Request, res: Response) => {
-  console.log('GET Autorizado.');
-});
-
 export { router as userRouter };

@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
 
@@ -15,14 +15,17 @@ class TokenUtils {
   verifyToken(req: Request, res: Response, next: any) {
     const token = req.headers.authorization;
     const secret = process.env.SECRET || '';
-    console.log("🚀 ~ TokenUtils ~ verifyToken ~ secret:", secret);
 
     if(!token) return res.status(401).json({ message: "Sem token." });
 
     jwt.verify(token, secret, function(error, decoded) {
-      
-      console.log("🚀 ~ TokenUtils ~ jwt.verify ~ error:", error);
-      if(error) return res.status(500).json({ message: "Falha na autenticação do token." });
+      if(error) {
+        console.log("🚀 ~ TokenUtils ~ jwt.verify ~ error:", error);
+        return res.status(500).json({ message: "Falha na autenticação do token." });
+      }
+
+      const jwtPayload = decoded as JwtPayload;
+      req.body.email = jwtPayload.email;
 
       next();
     });

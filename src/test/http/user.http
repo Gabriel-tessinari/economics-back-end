@@ -1,7 +1,7 @@
-@url = http://localhost:3000/user
+@url = http://localhost:3018/
 
 ###
-POST {{url}}/login
+POST {{url}}users/login
 Content-Type: application/json
 
 {
@@ -10,6 +10,6 @@ Content-Type: application/json
 }
 
 ###
-GET {{url}}
+GET {{url}}auth/email/gabriel@teste.com
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhYnJpZWxAdGVzdGUuY29tIiwiaWF0IjoxNzAxNzI5NDQyLCJleHAiOjE3MDE4MTU4NDJ9.-C4CaEQc6YQFkCF9yYTmIGNI50BJG3DnWXBCEJi2E0o

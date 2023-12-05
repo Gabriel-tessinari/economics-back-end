@@ -18,7 +18,7 @@ const options: cors.CorsOptions = {
 };
 
 dotenv.config();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3018;
 const app = express();
 
 app.use(cors(options));
