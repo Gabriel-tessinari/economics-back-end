@@ -18,7 +18,7 @@ class TokenUtils {
 
     if(!token) return res.status(401).json({ message: "Sem token." });
 
-    jwt.verify(token, secret, function(error, decoded) {
+    jwt.verify(token.replace('Bearer ', ''), secret, function(error, decoded) {
       if(error) {
         console.log("🚀 ~ TokenUtils ~ jwt.verify ~ error:", error);
         return res.status(500).json({ message: "Falha na autenticação do token." });
